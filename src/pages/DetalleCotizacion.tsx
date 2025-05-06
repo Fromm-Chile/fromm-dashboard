@@ -452,9 +452,14 @@ export const DetalleCotizacion = () => {
                         type="file"
                         onChange={(e) => {
                           const file = e.target.files?.[0];
+                          const maxSizeInBytes = 4 * 1024 * 1024;
                           if (file) {
-                            console.log(file);
-                            setFile(file);
+                            if (file.size > maxSizeInBytes) {
+                              alert("Documento no debe exceder los 4 MB!");
+                              e.target.value = "";
+                            } else {
+                              setFile(file);
+                            }
                           }
                         }}
                       />
