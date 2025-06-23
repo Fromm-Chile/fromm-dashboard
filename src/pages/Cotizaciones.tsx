@@ -3,19 +3,34 @@ import { Table } from "../components/Table";
 import { useQuery } from "@tanstack/react-query";
 import { apiUrl } from "../assets/variables";
 import axios, { AxiosError } from "axios";
-import { useNavigate } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 import { useUserStore } from "../store/useUserStore";
 import { SelectTable } from "../components/SelectTable";
 import { useEffect, useState } from "react";
 import useDebounce from "../hooks/useDebounce";
 
+const opcionesSelect = [
+  { id: "PENDIENTE", texto: "Pendiente", value: "PENDIENTE" },
+  { id: "ENVIADA", texto: "Enviada", value: "ENVIADA" },
+  { id: "VENDIDO", texto: "Vendido", value: "VENDIDO" },
+  { id: "SEGUIMIENTO", texto: "Seguimiento", value: "SEGUIMIENTO" },
+  { id: "DERIVADA", texto: "Derivada", value: "DERIVADA" },
+  { id: "PERDIDA", texto: "Perdida", value: "PERDIDA" },
+];
+
+type Cotizacion = {
+  id: number;
+};
+
 export const Cotizaciones = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<string | null>(null);
-  const [limit, setLimit] = useState<number>(10);
-  const [page, setPage] = useState<number>(1);
+  const querylimit = searchParams.get("limit");
+  const [limit, setLimit] = useState<number>(Number(querylimit) || 10);
   const [columnOrder, setColumnOrder] = useState(false);
-
+  const query = searchParams.get("page");
+  const [page, setPage] = useState<number>(Number(query) || 1);
   const navigate = useNavigate();
   const { countryCode, user = {} } = useUserStore();
 
@@ -38,14 +53,18 @@ export const Cotizaciones = () => {
     }
   }, [filter]);
 
+  useEffect(() => {
+    setSearchParams({ page: page.toString(), limit: limit.toString() });
+  }, [page, limit, setSearchParams]);
+
   const { data: { cotizaciones = [], totalPages = 1 } = {}, isLoading } =
-    useQuery({
+    useQuery<{ cotizaciones: Cotizacion[]; totalPages: number }>({
       queryKey: [
         "cotizaciones",
         debouncedSearch,
         filter,
         limit,
-        page,
+        page - 1,
         columnOrder,
       ],
       queryFn: async () => {
@@ -73,6 +92,7 @@ export const Cotizaciones = () => {
           return [];
         }
       },
+      // staleTime: 5 * 60 * 1000,
     });
 
   const { data: { totalCount, pendingInvoices, sendInvoices } = {} } = useQuery(
@@ -102,14 +122,6 @@ export const Cotizaciones = () => {
     }
   );
 
-  const opcionesSelect = Array.from(
-    new Set(cotizaciones.map((cotizacion: any) => cotizacion.statusR.name))
-  ).map((name) => ({
-    id: name, // Use the name as the id (or generate a unique id if needed)
-    texto: name,
-    value: name,
-  }));
-
   const columns = [
     {
       header: "Nro",
@@ -120,11 +132,11 @@ export const Cotizaciones = () => {
     },
     {
       header: "Nombre",
-      accessorKey: "user.name",
+      accessorKey: "name",
     },
     {
       header: "Empresa",
-      accessorKey: "user.company",
+      accessorKey: "company",
     },
     {
       header: "Fecha",
@@ -140,7 +152,7 @@ export const Cotizaciones = () => {
     },
     {
       header: "Estatus",
-      accessorKey: "statusR.name",
+      accessorKey: "status",
       cell: ({ getValue }: { getValue: () => any }) => {
         return (
           <div

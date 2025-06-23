@@ -113,6 +113,7 @@ export const NuevaCotizacion = () => {
   };
 
   const onSubmit = async (data: any) => {
+    console.log(data);
     setIsLoading(true);
     try {
       await axios.post(

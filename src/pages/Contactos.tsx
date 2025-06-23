@@ -3,17 +3,25 @@ import axios, { AxiosError } from "axios";
 import { apiUrl } from "../assets/variables";
 import { Table } from "../components/Table";
 import { Summary } from "../components/Summary";
-import { useNavigate } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 import { useUserStore } from "../store/useUserStore";
 import { SelectTable } from "../components/SelectTable";
 import { useEffect, useState } from "react";
 import useDebounce from "../hooks/useDebounce";
 
+const opcionesSelect = [
+  { id: "PENDIENTE", texto: "Pendiente", value: "PENDIENTE" },
+  { id: "COTIZACIÓN", texto: "Cotización", value: "COTIZACIÓN" },
+  { id: "DERIVADA", texto: "Derivada", value: "DERIVADA" },
+];
+
 export const Contactos = () => {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<string | null>(null);
   const [limit, setLimit] = useState<number>(10);
-  const [page, setPage] = useState<number>(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const query = searchParams.get("page");
+  const [page, setPage] = useState<number>(Number(query) || 1);
   const [columnOrder, setColumnOrder] = useState(false);
   const { countryCode } = useUserStore();
 
@@ -37,6 +45,10 @@ export const Contactos = () => {
     }
   }, [filter]);
 
+  useEffect(() => {
+    setSearchParams({ page: page.toString() });
+  }, [page, setSearchParams]);
+
   const { data: { contactos = [], totalPages = 1 } = {}, isLoading } = useQuery(
     {
       queryKey: [
@@ -44,7 +56,7 @@ export const Contactos = () => {
         debouncedSearch,
         filter,
         limit,
-        page,
+        page - 1,
         columnOrder,
       ],
       queryFn: async () => {
@@ -76,10 +88,10 @@ export const Contactos = () => {
           return [];
         }
       },
+      staleTime: 5 * 60 * 1000,
     }
   );
 
-  // console.log(contactos);
   const { data: { totalCount, pendingContacts, invoiceContacts } = {} } =
     useQuery({
       queryKey: ["datosContactos", countryCode],
@@ -105,14 +117,6 @@ export const Contactos = () => {
         }
       },
     });
-
-  const opcionesSelect = Array.from(
-    new Set(contactos.map((cotizacion: any) => cotizacion.status.name))
-  ).map((name) => ({
-    id: name, // Use the name as the id (or generate a unique id if needed)
-    texto: name,
-    value: name,
-  }));
 
   const columns = [
     {

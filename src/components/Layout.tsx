@@ -3,76 +3,12 @@ import useAuthStore from "../store/useAuthStore";
 import { MenuItem } from "./MenuItem";
 import { useEffect, useState } from "react";
 import { useUserStore } from "../store/useUserStore";
-
-type NavMenu = {
-  id: number;
-  name: string;
-  icon: string;
-  iconWhite?: string;
-  link: string;
-};
-
-const navMenu: NavMenu[] = [
-  {
-    id: 1,
-    name: "Inicio",
-    icon: "/icons/home.svg",
-    iconWhite: "/icons/homeW.svg",
-    link: "/inicio",
-  },
-  {
-    id: 2,
-    name: "Cotizaciones",
-    icon: "/icons/cash.svg",
-    iconWhite: "/icons/cashW.svg",
-    link: "/cotizaciones",
-  },
-  {
-    id: 3,
-    name: "Contactos",
-    icon: "/icons/contact.svg",
-    iconWhite: "/icons/contactW.svg",
-    link: "/contactos",
-  },
-  {
-    id: 4,
-    name: "Servicio Técnico",
-    icon: "/icons/tool.svg",
-    iconWhite: "/icons/toolW.svg",
-    link: "/servicios",
-  },
-  {
-    id: 5,
-    name: "Clientes",
-    icon: "/icons/users.svg",
-    iconWhite: "/icons/usersW.svg",
-    link: "/clientes",
-  },
-  {
-    id: 6,
-    name: "Resultados",
-    icon: "/icons/chart.svg",
-    iconWhite: "/icons/chartW.svg",
-    link: "/resultados",
-  },
-];
-
-const navMenuServicioTecnico: NavMenu[] = [
-  {
-    id: 1,
-    name: "Inicio",
-    icon: "/icons/home.svg",
-    iconWhite: "/icons/homeW.svg",
-    link: "/inicio",
-  },
-  {
-    id: 4,
-    name: "Servicio Técnico",
-    icon: "/icons/tool.svg",
-    iconWhite: "/icons/toolW.svg",
-    link: "/servicios",
-  },
-];
+import {
+  navMenu,
+  navMenuAdminChile,
+  navMenuServicioTecnico,
+  superAdminMenu,
+} from "../assets/menuData";
 
 export const Layout = () => {
   const [open, setOpen] = useState(true);
@@ -128,7 +64,18 @@ export const Layout = () => {
           )}
         </div>
         <MenuItem
-          menuData={roleId === 6 ? navMenuServicioTecnico : navMenu}
+          menuData={(() => {
+            switch (roleId) {
+              case 1:
+                return superAdminMenu;
+              case 6:
+                return navMenuServicioTecnico;
+              case 2:
+                return navMenuAdminChile;
+              default:
+                return navMenu;
+            }
+          })()}
           isOpen={open}
         />
         <img

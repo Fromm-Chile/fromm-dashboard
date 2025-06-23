@@ -6,14 +6,21 @@ import { Summary } from "../components/Summary";
 import { useUserStore } from "../store/useUserStore";
 import { SelectTable } from "../components/SelectTable";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 import useDebounce from "../hooks/useDebounce";
+
+const opcionesSelect = [
+  { id: "PENDIENTE", texto: "Pendiente", value: "PENDIENTE" },
+  { id: "FINALIZADO", texto: "Finalizado", value: "FINALIZADO" },
+];
 
 export const ServicioTecnico = () => {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<string | null>(null);
   const [limit, setLimit] = useState<number>(10);
-  const [page, setPage] = useState<number>(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const query = searchParams.get("page");
+  const [page, setPage] = useState<number>(Number(query) || 1);
   const [columnOrder, setColumnOrder] = useState(false);
   const { countryCode } = useUserStore();
 
@@ -37,6 +44,10 @@ export const ServicioTecnico = () => {
     }
   }, [filter]);
 
+  useEffect(() => {
+    setSearchParams({ page: page.toString() });
+  }, [page, setSearchParams]);
+
   const { data: { contactos = [], totalPages = 1 } = {}, isLoading } = useQuery(
     {
       queryKey: [
@@ -44,7 +55,7 @@ export const ServicioTecnico = () => {
         debouncedSearch,
         filter,
         limit,
-        page,
+        page - 1,
         columnOrder,
       ],
       queryFn: async () => {
@@ -76,6 +87,7 @@ export const ServicioTecnico = () => {
           return [];
         }
       },
+      staleTime: 5 * 60 * 1000,
     }
   );
 
@@ -104,14 +116,6 @@ export const ServicioTecnico = () => {
         }
       },
     });
-
-  const opcionesSelect = Array.from(
-    new Set(contactos.map((cotizacion: any) => cotizacion.status.name))
-  ).map((name) => ({
-    id: name, // Use the name as the id (or generate a unique id if needed)
-    texto: name,
-    value: name,
-  }));
 
   const columns = [
     {

@@ -30,6 +30,7 @@ export const DetalleServicio = () => {
       });
       return data;
     },
+    staleTime: 5 * 60 * 1000,
   });
 
   const navigate = useNavigate();
@@ -50,7 +51,7 @@ export const DetalleServicio = () => {
       console.error(error);
     } finally {
       handleState("finalizado", false);
-      navigate("/servicios");
+      navigate(-1);
       setModalLoader(false);
     }
   };
@@ -65,7 +66,7 @@ export const DetalleServicio = () => {
             <img src="/icons/left-arrow.svg" width={15} height={15} />
             <button
               className="cursor-pointer hover:text-red-600"
-              onClick={() => navigate("/contactos")}
+              onClick={() => navigate(-1)}
             >
               Volver
             </button>

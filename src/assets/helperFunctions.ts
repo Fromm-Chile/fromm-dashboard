@@ -27,14 +27,18 @@ export const pasarPrimeraMayuscula = (str: string) => {
     .join(" ");
 };
 
-export const formatAsCLP = (amount: number) => {
-  if (!amount) return;
-  return new Intl.NumberFormat("es-CL", {
+export const formatAsUSD = (amount: number) => {
+  if (amount == null) return;
+  return new Intl.NumberFormat("en-US", {
     style: "currency",
-    currency: "CLP", // Adjust if you want to show decimal places
+    currency: "USD",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
   }).format(amount);
 };
 
-export const parseCurrency = (formattedValue: string) => {
-  return Number(formattedValue.replace(/[^0-9]/g, ""));
+export const parseCurrency = (formattedValue: string): number => {
+  if (!formattedValue) return NaN;
+  const cleaned = formattedValue.replace(/[^0-9.-]/g, "");
+  return parseFloat(cleaned);
 };

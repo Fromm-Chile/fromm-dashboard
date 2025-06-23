@@ -9,6 +9,7 @@ import useAuthStore from "../store/useAuthStore";
 import { useUserStore } from "../store/useUserStore";
 import { useState } from "react";
 import { Loader } from "../components/Loader";
+import { ModalConfirmacion } from "../components/ModalConfirmacion";
 
 type FormData = {
   email: string;
@@ -22,6 +23,7 @@ const schema = yup.object().shape({
 
 export const LogIn = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [passwordModal, setPasswordModal] = useState(false);
 
   const navigate = useNavigate();
 
@@ -116,6 +118,7 @@ export const LogIn = () => {
                         <a
                           href="#"
                           className="font-semibold text-red-600 hover:text-red-500"
+                          onClick={() => setPasswordModal(true)}
                         >
                           Olvidaste tu contraseña?
                         </a>
@@ -145,6 +148,23 @@ export const LogIn = () => {
             </div>
           </div>
         </div>
+      )}
+      {passwordModal && (
+        <ModalConfirmacion
+          // error={error || ""}
+          // isLoading={modalLoader}
+          isOpen={passwordModal}
+          onCancel={() => setPasswordModal(false)}
+          text={
+            <p>
+              Debes solicitar una nueva contraseña al administrador general!
+            </p>
+          }
+          onSubmit={async () => {
+            setPasswordModal(false);
+          }}
+          hasComment={false}
+        ></ModalConfirmacion>
       )}
     </>
   );

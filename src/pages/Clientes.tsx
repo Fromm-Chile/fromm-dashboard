@@ -5,12 +5,14 @@ import { Table } from "../components/Table";
 import { useUserStore } from "../store/useUserStore";
 import { useEffect, useState } from "react";
 import useDebounce from "../hooks/useDebounce";
-import { useNavigate } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 
 export const Clientes = () => {
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState<number>(10);
-  const [page, setPage] = useState<number>(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const query = searchParams.get("page");
+  const [page, setPage] = useState<number>(Number(query) || 1);
   const [columnOrder, setColumnOrder] = useState(false);
   const { countryCode } = useUserStore();
 
@@ -54,7 +56,12 @@ export const Clientes = () => {
         return [];
       }
     },
+    staleTime: 5 * 60 * 1000,
   });
+
+  useEffect(() => {
+    setSearchParams({ page: page.toString() });
+  }, [page, setSearchParams]);
 
   const columns = [
     {

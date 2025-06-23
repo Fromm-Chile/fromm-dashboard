@@ -1,7 +1,7 @@
 type SummaryProps = {
   total: number;
   pendiente: number;
-  enviada: number;
+  enviada?: number | string;
   tituloTotal?: string;
   tituloPendiente?: string;
   tituloEnviada?: string;

@@ -8,24 +8,31 @@ import { SelectTable } from "../components/SelectTable";
 import { useModalStates } from "../hooks/useModalStates";
 import { ModalConfirmacion } from "../components/ModalConfirmacion";
 import { Button } from "../components/Button";
-import { formatAsCLP, parseCurrency } from "../assets/helperFunctions";
+import { formatAsUSD } from "../assets/helperFunctions";
 import { useUserStore } from "../store/useUserStore";
 
 export const DetalleCotizacion = () => {
   const [estatus, setEstatus] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [comment, setComment] = useState<string>("");
   const [file, setFile] = useState<File | null>(null);
+  const [comment, setComment] = useState<string>("");
   const [totalAmount, setTotalAmount] = useState<number | null>(null);
   const [modalLoader, setModalLoader] = useState(false);
-  const [initialState, handleState] = useModalStates({
-    enviada: false,
-    derivada: false,
-    seguimiento: false,
-    agregarSeguimiento: false,
-    vendido: false,
-    perdida: false,
-  });
+  const [initialState, handleState] = useModalStates(
+    {
+      enviada: false,
+      derivada: false,
+      seguimiento: false,
+      agregarSeguimiento: false,
+      vendido: false,
+      perdida: false,
+    },
+    (_, isOpen) => {
+      if (!isOpen) {
+        setEstatus(null);
+      }
+    }
+  );
 
   const { user = {} } = useUserStore();
 
@@ -50,13 +57,12 @@ export const DetalleCotizacion = () => {
       });
       return data;
     },
+    staleTime: 5 * 60 * 1000,
   });
 
-  // console.log(cotizacion);
   const navigate = useNavigate();
 
   const handleClick = (value: string) => {
-    console.log(value);
     handleState(value, true);
   };
 
@@ -79,9 +85,14 @@ export const DetalleCotizacion = () => {
       );
     } catch (error) {
       console.error(error);
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 413) {
+          alert(error.response?.data.message || "");
+        }
+      }
     } finally {
       handleState("enviada", false);
-      navigate("/cotizaciones");
+      navigate(-1);
       setModalLoader(false);
     }
   };
@@ -106,7 +117,7 @@ export const DetalleCotizacion = () => {
       console.error(error);
     } finally {
       handleState("enviada", false);
-      navigate("/cotizaciones");
+      navigate(-1);
       setModalLoader(false);
     }
   };
@@ -116,6 +127,9 @@ export const DetalleCotizacion = () => {
       setError("El monto de la venta es requerido!");
       return;
     }
+
+    // console.log(totalAmount);
+    // return;
     try {
       setModalLoader(true);
       await axios.put(
@@ -131,7 +145,7 @@ export const DetalleCotizacion = () => {
       console.error(error);
     } finally {
       handleState("vendido", false);
-      navigate("/cotizaciones");
+      navigate(-1);
       setModalLoader(false);
     }
   };
@@ -152,7 +166,7 @@ export const DetalleCotizacion = () => {
       console.error(error);
     } finally {
       handleState("derivada", false);
-      navigate("/cotizaciones");
+      navigate(-1);
       setModalLoader(false);
     }
   };
@@ -177,7 +191,7 @@ export const DetalleCotizacion = () => {
       console.error(error);
     } finally {
       handleState("perdida", false);
-      navigate("/cotizaciones");
+      navigate(-1);
       setModalLoader(false);
     }
   };
@@ -192,7 +206,7 @@ export const DetalleCotizacion = () => {
             <img src="/icons/left-arrow.svg" width={15} height={15} />
             <button
               className="cursor-pointer hover:text-red-600"
-              onClick={() => navigate("/cotizaciones")}
+              onClick={() => navigate(-1)}
             >
               Volver
             </button>
@@ -239,8 +253,8 @@ export const DetalleCotizacion = () => {
                   </p>
                   {cotizacion.statusR.name === "VENDIDO" && (
                     <p className="text-gray-700 text-2xl">
-                      <strong>Monto neto de la venta:</strong>{" "}
-                      {formatAsCLP(cotizacion.totalAmount)}
+                      <strong>Monto neto de la venta:</strong> USD{" "}
+                      {formatAsUSD(cotizacion.totalAmount)}
                     </p>
                   )}
                 </div>
@@ -265,7 +279,7 @@ export const DetalleCotizacion = () => {
                         setEstatus(e.target.value);
                         handleClick(e.target.value);
                       }}
-                      value={estatus || cotizacion.statusR.id}
+                      value={estatus || ""}
                     />
                   )}
                   {cotizacion.statusR.name === "PENDIENTE" ||
@@ -450,6 +464,7 @@ export const DetalleCotizacion = () => {
                         name=""
                         className="h-full w-full opacity-0 cursor-pointer"
                         type="file"
+                        accept=".pdf,.doc,.docx,.xls,.xlsx,.png,.jpg,.jpeg,.gif,.bmp,.webp,image/*"
                         onChange={(e) => {
                           const file = e.target.files?.[0];
                           const maxSizeInBytes = 4 * 1024 * 1024;
@@ -547,21 +562,16 @@ export const DetalleCotizacion = () => {
         >
           <div className="flex flex-col items-center justify-center mt-5 w-[80%]">
             <label htmlFor="" className="self-start mb-1">
-              Ingresa el monto neto de la venta.
+              Ingresa el monto neto de la venta en{" "}
+              <strong>dólares americanos (USD)</strong>.
             </label>
             <input
-              type="text"
+              type="number"
               className="border border-gray-300 p-2 w-[100%] rounded-md focus-visible:outline-none focus-visible:border-red-500"
               onChange={(e) => {
-                const rawValue = parseCurrency(e.target.value); // Parse the formatted value back to a number
-                setTotalAmount(rawValue); // Update the state with the raw number
+                setTotalAmount(Number(e.target.value));
               }}
-              onBlur={(e) => {
-                // Format the value when the input loses focus
-                const rawValue = parseCurrency(e.target.value);
-                e.target.value = formatAsCLP(rawValue) || "";
-              }}
-              value={totalAmount !== null ? formatAsCLP(totalAmount) : ""}
+              value={totalAmount || ""}
             />
           </div>
         </ModalConfirmacion>

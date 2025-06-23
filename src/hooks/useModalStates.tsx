@@ -10,7 +10,8 @@ type UseModalStatesReturn = [
 ];
 
 export const useModalStates = (
-  initialObject: ModalStates
+  initialObject: ModalStates,
+  onStateChange?: (key: string, isOpen: boolean) => void
 ): UseModalStatesReturn => {
   const [initialState, setInitialState] = useState<ModalStates>(initialObject);
 
@@ -19,6 +20,9 @@ export const useModalStates = (
       ...prevState,
       [key]: isOpen,
     }));
+    if (onStateChange) {
+      onStateChange(key, isOpen);
+    }
   };
   return [initialState, handleState];
 };

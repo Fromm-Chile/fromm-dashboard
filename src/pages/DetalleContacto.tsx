@@ -14,11 +14,18 @@ export const DetalleContacto = () => {
   const [modalLoader, setModalLoader] = useState(false);
   const [department, setDepartment] = useState<string>("");
   const [otro, setOtro] = useState<string>("");
-  const [initialState, handleState] = useModalStates({
-    derivada: false,
-    cotizado: false,
-    servicio: false,
-  });
+  const [initialState, handleState] = useModalStates(
+    {
+      derivada: false,
+      cotizado: false,
+      servicio: false,
+    },
+    (_, isOpen) => {
+      if (!isOpen) {
+        setEstatus(null);
+      }
+    }
+  );
 
   const { user = {} } = useUserStore();
 
@@ -35,6 +42,7 @@ export const DetalleContacto = () => {
       });
       return data;
     },
+    staleTime: 5 * 60 * 1000,
   });
 
   const navigate = useNavigate();
@@ -70,7 +78,7 @@ export const DetalleContacto = () => {
       console.error(error);
     } finally {
       handleState("cotizado", false);
-      navigate("/contactos");
+      navigate(-1);
       setModalLoader(false);
     }
   };
@@ -91,7 +99,7 @@ export const DetalleContacto = () => {
       console.error(error);
     } finally {
       handleState("servicio", false);
-      navigate("/contactos");
+      navigate(-1);
       setModalLoader(false);
     }
   };
@@ -112,7 +120,7 @@ export const DetalleContacto = () => {
       console.error(error);
     } finally {
       handleState("cotizado", false);
-      navigate("/contactos");
+      navigate(-1);
       setModalLoader(false);
     }
   };
@@ -129,7 +137,7 @@ export const DetalleContacto = () => {
             <img src="/icons/left-arrow.svg" width={15} height={15} />
             <button
               className="cursor-pointer hover:text-red-600"
-              onClick={() => navigate("/contactos")}
+              onClick={() => navigate(-1)}
             >
               Volver
             </button>
@@ -196,7 +204,7 @@ export const DetalleContacto = () => {
                         setEstatus(e.target.value);
                         handleClick(e.target.value);
                       }}
-                      value={estatus || contacto.status.id}
+                      value={estatus || ""}
                       disabled={contacto.status.name !== "PENDIENTE"}
                     />
                   )}

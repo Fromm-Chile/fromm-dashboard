@@ -21,23 +21,8 @@ export const HistorialCliente = () => {
       });
       return data;
     },
+    staleTime: 5 * 60 * 1000,
   });
-
-  // const { data: messages = [] } = useQuery({
-  //   queryKey: ["userMessages", countryCode],
-  //   queryFn: async () => {
-  //     const { data } = await axios.get(
-  //       `${apiUrl}/admin/contacts/messages/user/${id}`,
-  //       {
-  //         params: { countryCode },
-  //         headers: {
-  //           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-  //         },
-  //       }
-  //     );
-  //     return data;
-  //   },
-  // });
 
   return (
     <>
@@ -46,7 +31,7 @@ export const HistorialCliente = () => {
         <img src="/icons/left-arrow.svg" width={15} height={15} />
         <button
           className="cursor-pointer hover:text-red-600"
-          onClick={() => navigate("/clientes")}
+          onClick={() => navigate(-1)}
         >
           Volver
         </button>
