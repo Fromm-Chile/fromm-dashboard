@@ -102,12 +102,12 @@ export const Inicio = () => {
     <>
       <div>
         <h1 className="text-4xl text-gray-500 text-center font-bold my-10">
-          Resumen Cotizaciones
+          Quotes Summary
         </h1>
         <div className="flex gap-5 items-center justify-center border border-red-400 pt-2 rounded-2xl mb-5 bg-blue-100">
-          <p className="text-xl text-gray-600">Rango de fecha consultado</p>
+          <p className="text-xl text-gray-600">Selected date range</p>
           <InputFecha
-            label="Desde"
+            label="From"
             onChange={(e: Date[]) => {
               setInputStartDate(e[0]);
             }}
@@ -115,7 +115,7 @@ export const Inicio = () => {
             obligatorio
           />
           <InputFecha
-            label="Hasta"
+            label="To"
             onChange={(e) => {
               setInputEndDate(e[0]);
             }}
@@ -128,7 +128,7 @@ export const Inicio = () => {
               className="w-[150px] text-center"
               onClick={handleFilter}
             >
-              Filtrar
+              Filter
             </Button>
           </div>
         </div>
@@ -138,8 +138,8 @@ export const Inicio = () => {
             total={cotizacionesTotales}
             enviada={montoTotal}
             pendiente={cotizacionesVendidas}
-            tituloEnviada="Monto Total USD"
-            tituloPendiente="Cotizaciones Vendidas"
+            tituloEnviada="Total Amount USD"
+            tituloPendiente="Sold Quotes"
           />
           {filteredInvoices.length > 0 ? (
             <div className="flex gap-4 pb-10">
@@ -152,7 +152,7 @@ export const Inicio = () => {
             </div>
           ) : (
             <div className="flex justify-center items-center h-[300px]">
-              <p className="text-gray-500 text-xl">No hay datos para mostrar</p>
+              <p className="text-gray-500 text-xl">No data to display</p>
             </div>
           )}
         </div>

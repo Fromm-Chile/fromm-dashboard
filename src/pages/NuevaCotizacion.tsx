@@ -23,11 +23,11 @@ type UserSearch = {
 };
 
 const schema = yup.object().shape({
-  name: yup.string().required("Nombre es requerido"),
-  email: yup.string().email().required("Correo es requerido"),
+  name: yup.string().required("Name is required"),
+  email: yup.string().email().required("Email is required"),
   phone: yup.string(),
-  company: yup.string().required("El nombre de la empresa es requerido"),
-  message: yup.string().required("Mensaje es requerido"),
+  company: yup.string().required("Company name is required"),
+  message: yup.string().required("Message is required"),
 });
 
 export const NuevaCotizacion = () => {
@@ -141,18 +141,18 @@ export const NuevaCotizacion = () => {
       {isLoading && <Loader />}
       <div className="m-auto max-w-[1150px] min-h-[600px] bg-white shadow-lg rounded-lg py-6 px-36 my-10">
         <h1 className="text-center text-2xl my-10 uppercase font-medium text-gray-700">
-          Crear una nueva cotización
+          Create a new quote
         </h1>
         <p className="mb-10">
-          Para generar una nueva cotización deberás buscar al usuario en la base
-          de datos usando su <strong>correo electrónico</strong>.
+          To generate a new quote, you must search for the user in the database
+          using their <strong>email address</strong>.
         </p>
         <Select
           options={selectOptions}
           onInputChange={handleInputChange}
           onChange={handleChange}
           isLoading={isFetching}
-          placeholder="Buscar usuario por correo..."
+          placeholder="Search user by email..."
           isClearable
           noOptionsMessage={() => (
             <div
@@ -174,18 +174,18 @@ export const NuevaCotizacion = () => {
               }}
             >
               {debouncedSearch.length < 3
-                ? "Escribe al menos 3 caracteres"
-                : "No se encontraron resultados. Haz clic aquí para limpiar el formulario."}
+                ? "Type at least 3 characters"
+                : "No results found. Click here to clear the form."}
             </div>
           )}
-          loadingMessage={() => "Cargando..."}
+          loadingMessage={() => "Loading..."}
         />
         <div className="md:grid md:grid-cols-1 md:gap-0 my-10 mb-14">
           <div className="flex w-full gap-5 mb-5">
             <InputController
               control={control}
               name="name"
-              placeholder="Nombre*"
+              placeholder="Name*"
               error={errors.name?.message}
               className="w-[50%]"
               disabled={selectedUser ? true : false}
@@ -193,7 +193,7 @@ export const NuevaCotizacion = () => {
             <InputController
               control={control}
               name="email"
-              placeholder="Correo*"
+              placeholder="Email*"
               error={errors.email?.message}
               className="w-[50%]"
               disabled={selectedUser ? true : false}
@@ -203,14 +203,14 @@ export const NuevaCotizacion = () => {
             <InputController
               control={control}
               name="phone"
-              placeholder="Teléfono"
+              placeholder="Phone"
               className="w-[50%]"
               disabled={selectedUser ? true : false}
             />
             <InputController
               control={control}
               name="company"
-              placeholder="Empresa*"
+              placeholder="Company*"
               error={errors.name?.message}
               className="w-[50%]"
               disabled={selectedUser ? true : false}
@@ -219,7 +219,7 @@ export const NuevaCotizacion = () => {
           <TextareaController
             control={control}
             name="message"
-            placeholder="Detalles cotización*"
+            placeholder="Quote details*"
             error={errors.message?.message}
           />
           <div className="flex justify-center">
@@ -228,7 +228,7 @@ export const NuevaCotizacion = () => {
               onClick={handleSubmit(() => setModal(true))}
               link=""
             >
-              CREAR COTIZACIÓN
+              CREATE QUOTE
             </Button>
           </div>
         </div>
@@ -238,12 +238,12 @@ export const NuevaCotizacion = () => {
             className="cursor-pointer hover:text-red-600"
             onClick={() => navigate("/cotizaciones")}
           >
-            Volver
+            Back
           </button>
         </div>
       </div>
       <ModalConfirmacion
-        text="Estás segura de crear una nueva cotización?"
+        text="Are you sure you want to create a new quote?"
         isOpen={modal}
         onSubmit={handleSubmit(onSubmit)}
         onCancel={() => setModal(false)}

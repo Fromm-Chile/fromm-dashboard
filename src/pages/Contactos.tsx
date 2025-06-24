@@ -88,7 +88,7 @@ export const Contactos = () => {
           return [];
         }
       },
-      staleTime: 5 * 60 * 1000,
+      refetchOnWindowFocus: false,
     }
   );
 
@@ -120,22 +120,22 @@ export const Contactos = () => {
 
   const columns = [
     {
-      header: "Nro",
+      header: "No.",
       accessorKey: "id",
       cell: ({ getValue }: { getValue: () => any }) => (
         <div className="text-center">{getValue()}</div>
       ),
     },
     {
-      header: "Nombre",
+      header: "Name",
       accessorKey: "name",
     },
     {
-      header: "Fecha",
+      header: "Date",
       accessorKey: "createdAt",
       cell: ({ getValue }: { getValue: () => any }) => {
         const date = new Date(getValue());
-        return date.toLocaleDateString("es-ES", {
+        return date.toLocaleDateString("en-US", {
           day: "2-digit",
           month: "2-digit",
           year: "numeric",
@@ -143,11 +143,11 @@ export const Contactos = () => {
       },
     },
     {
-      header: "Empresa",
+      header: "Company",
       accessorKey: "company",
     },
     {
-      header: "Estatus",
+      header: "Status",
       accessorKey: "status.name",
       cell: ({ getValue }: { getValue: () => any }) => {
         return (
@@ -176,13 +176,13 @@ export const Contactos = () => {
           total={totalCount || 0}
           pendiente={pendingContacts || 0}
           enviada={invoiceContacts || 0}
-          tituloTotal="Mensajes recibidos"
-          tituloPendiente="Mensajes pendientes"
-          tituloEnviada="Mensajes cotizaciones"
+          tituloTotal="Received messages"
+          tituloPendiente="Pending messages"
+          tituloEnviada="Quote messages"
         />
         <div className="w-full h-auto bg-white rounded-3xl shadow-lg p-8 mb-12 text-gray-600">
           <div className="mb-6 flex justify-between items-center">
-            <h1 className="text-2xl font-medium text-center">Contactos</h1>
+            <h1 className="text-2xl font-medium text-center">Contacts</h1>
           </div>
           <div className="flex items-center justify-around mb-4">
             <div className="border-2 border-gray-200 rounded-lg flex gap-1 items-center w-[450px]">
@@ -194,7 +194,7 @@ export const Contactos = () => {
               />
               <input
                 type="text"
-                placeholder="Buscar..."
+                placeholder="Search..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="p-2 rounded-lg outline-none w-[450px]"
@@ -202,7 +202,7 @@ export const Contactos = () => {
             </div>
             <div className="flex justify-end pb-6">
               <SelectTable
-                label="Filtrar por estatus"
+                label="Filter by status"
                 selectOptions={opcionesSelect}
                 onChange={(e) => {
                   setFilter(e.target.value);
@@ -211,7 +211,7 @@ export const Contactos = () => {
               />
             </div>
             <div className="border-2 border-gray-200 rounded-lg p-2 flex gap-5 items-center">
-              <p>Mostrar</p>
+              <p>Show</p>
               <select
                 className="select-registros"
                 value={limit || ""}
@@ -225,7 +225,7 @@ export const Contactos = () => {
                   </option>
                 ))}
               </select>
-              <p>registros</p>
+              <p>records</p>
             </div>
           </div>
           <Table
@@ -253,7 +253,7 @@ export const Contactos = () => {
                 </div>
                 <div>
                   <p>
-                    Página {page} de {totalPages}
+                    Page {page} of {totalPages}
                   </p>
                 </div>
                 <div className="flex gap-5 items-center p-2 hover:bg-gray-200">

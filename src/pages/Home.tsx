@@ -2,44 +2,37 @@ export const Home = () => {
   return (
     <>
       <h1 className="text-3xl font-bold text-red-500 pb-4 text-center mt-10 mb-8">
-        Bienvenid@!
+        Welcome!
       </h1>
       <div className="max-w-[1150px] mx-auto bg-white shadow-lg rounded-lg p-6">
         {/* Welcome Section */}
         <div className="mb-6">
           <h1 className="text-3xl font-bold text-red-500 pb-4">
-            Panel Administrativo Fromm Web
+            Fromm Web Admin Panel (DEMO)
           </h1>
           <p className="text-gray-700 text-lg">
-            Este es el sistema centralizado para gestionar cotizaciones,
-            contactos y clientes. Aquí podrás acceder a todas las herramientas
-            necesarias para optimizar tus procesos y mejorar la experiencia de
-            tus clientes.
+            This is the centralized system to manage quotes, contacts, and
+            clients. Here you can access all the necessary tools to optimize
+            your processes and improve your clients' experience.
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
           <div className="bg-gray-100 p-4 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 ease-in-out">
-            <h2 className="text-xl font-semibold text-gray-700 mb-2">
-              Cotizaciones
-            </h2>
-            <p className="text-gray-500">
-              Gestiona las cotizaciones de tus clientes.
-            </p>
+            <h2 className="text-xl font-semibold text-gray-700 mb-2">Quotes</h2>
+            <p className="text-gray-500">Manage your clients' quotes.</p>
           </div>
           <div className="bg-gray-100 p-4 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 ease-in-out">
             <h2 className="text-xl font-semibold text-gray-700 mb-2">
-              Contactos
+              Contacts
             </h2>
-            <p className="text-gray-500">
-              Administra los contactos de tus clientes.
-            </p>
+            <p className="text-gray-500">Manage your clients' contacts.</p>
           </div>
           <div className="bg-gray-100 p-4 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 ease-in-out">
             <h2 className="text-xl font-semibold text-gray-700 mb-2">
-              Clientes
+              Clients
             </h2>
             <p className="text-gray-500">
-              Consulta y gestiona la información de tus clientes.
+              View and manage your clients' information.
             </p>
           </div>
         </div>

@@ -11,9 +11,9 @@ export const Summary = ({
   total,
   pendiente,
   enviada,
-  tituloTotal = "Cotizaciones totales",
-  tituloPendiente = "Cotizaciones pendientes",
-  tituloEnviada = "Cotizaciones enviadas",
+  tituloTotal = "Total Quotes",
+  tituloPendiente = "Pending Quotes",
+  tituloEnviada = "Sent Quotes",
 }: SummaryProps) => {
   return (
     <div className="h-[151px] w-full bg-white rounded-3xl shadow-md flex items-center justify-around p-4 mb-5">

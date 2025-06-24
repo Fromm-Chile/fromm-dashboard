@@ -68,40 +68,40 @@ export const DetalleServicio = () => {
               className="cursor-pointer hover:text-red-600"
               onClick={() => navigate(-1)}
             >
-              Volver
+              Back
             </button>
           </div>
           <h1 className="text-3xl font-bold text-red-500 pb-4 mt-2 mb-4">
-            Detalle del Servicio Técnico
+            Technical Service Details
           </h1>
           <div className="w-full max-w-[1150px] mx-auto bg-white shadow-lg rounded-lg p-6">
             <div className="mb-6">
               <h2 className="text-xl font-semibold text-gray-700 mb-2">
-                Información del Contacto
+                Contact Information
               </h2>
               <div className="flex justify-between items-center mb-4 bg-gray-100 p-4 rounded-lg ">
                 <div className="flex gap-5">
                   <div>
                     <p className="text-gray-700">
-                      <strong>Contacto:</strong> #{contacto.id}
+                      <strong>Contact:</strong> #{contacto.id}
                     </p>
                     <p className="text-gray-700">
-                      <strong>Nombre:</strong>{" "}
-                      {contacto.name || "No disponible"}
+                      <strong>Name:</strong>{" "}
+                      {contacto.name || "Not available"}
                     </p>
                     <p className="text-gray-700">
                       <strong>Email:</strong>{" "}
-                      {contacto.email || "No disponible"}
+                      {contacto.email || "Not available"}
                     </p>
                   </div>
                   <div>
                     <p className="text-gray-700">
-                      <strong>Teléfono:</strong>{" "}
-                      {contacto.phone || "No registrado"}
+                      <strong>Phone:</strong>{" "}
+                      {contacto.phone || "Not registered"}
                     </p>
                     <p className="text-gray-700">
-                      <strong>Empresa:</strong>{" "}
-                      {contacto.company || "No registrada"}
+                      <strong>Company:</strong>{" "}
+                      {contacto.company || "Not registered"}
                     </p>
                     <p
                       className={`p-2 rounded-lg text-center w-fit text-white mt-2 ${
@@ -124,7 +124,7 @@ export const DetalleServicio = () => {
                       link=""
                       onClick={() => handleState("finalizado", true)}
                     >
-                      Servicio Finalizado
+                      Service Completed
                     </Button>
                   )}
                 </div>
@@ -132,36 +132,36 @@ export const DetalleServicio = () => {
             </div>
             <div className="mb-6">
               <h2 className="text-xl font-semibold text-gray-700 mb-2">
-                Mensaje
+                Message
               </h2>
               <div className="bg-gray-100 p-4 rounded-lg">
                 <p className="text-gray-700 whitespace-pre-line">
-                  {contacto.message || "No hay mensaje disponible."}
+                  {contacto.message || "No message available."}
                 </p>
               </div>
             </div>
             <div>
               <h2 className="text-xl font-semibold text-gray-700 mb-2">
-                Información Adicional
+                Additional Information
               </h2>
               <div className="bg-gray-100 p-4 rounded-lg flex gap-10">
                 {contacto.status === "SERVICE" && (
                   <p className="text-gray-700">
-                    <strong>Equipo:</strong>{" "}
-                    {contacto.equipment || "No especificado"}
+                    <strong>Equipment:</strong>{" "}
+                    {contacto.equipment || "Not specified"}
                   </p>
                 )}
                 <p className="text-gray-700">
-                  <strong>Fecha de Creación:</strong>{" "}
+                  <strong>Creation date:</strong>{" "}
                   {contacto.createdAt
-                    ? new Date(contacto.createdAt).toLocaleDateString("es-ES")
-                    : "No disponible"}
+                    ? new Date(contacto.createdAt).toLocaleDateString("en-US")
+                    : "Not available"}
                 </p>
                 <p className="text-gray-700">
-                  <strong>Última Actualización:</strong>{" "}
+                  <strong>Last update:</strong>{" "}
                   {contacto.updatedAt
-                    ? new Date(contacto.updatedAt).toLocaleDateString("es-ES")
-                    : "No disponible"}
+                    ? new Date(contacto.updatedAt).toLocaleDateString("en-US")
+                    : "Not available"}
                 </p>
               </div>
             </div>
@@ -174,15 +174,15 @@ export const DetalleServicio = () => {
               onCancel={() => handleState("finalizado", false)}
               text={
                 <p>
-                  Cambar estado a <strong>FINALIZADO</strong>
+                  Change status to <strong>COMPLETED</strong>
                 </p>
               }
               onSubmit={handleStatusFinalizado}
-              titleComment="Comentario (opcional)"
+              titleComment="Comment (optional)"
             >
               <div>
                 <p className="text-gray-700 text-center">
-                  Esta seguro de finalizar el servicio?
+                  Are you sure you want to complete the service?
                 </p>
               </div>
             </ModalConfirmacion>

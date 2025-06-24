@@ -3,7 +3,7 @@ import { Table } from "../components/Table";
 import { useQuery } from "@tanstack/react-query";
 import { apiUrl } from "../assets/variables";
 import axios, { AxiosError } from "axios";
-import { useNavigate, useSearchParams } from "react-router";
+import { useLocation, useNavigate, useSearchParams } from "react-router";
 import { useUserStore } from "../store/useUserStore";
 import { SelectTable } from "../components/SelectTable";
 import { useEffect, useState } from "react";
@@ -17,10 +17,6 @@ const opcionesSelect = [
   { id: "DERIVADA", texto: "Derivada", value: "DERIVADA" },
   { id: "PERDIDA", texto: "Perdida", value: "PERDIDA" },
 ];
-
-type Cotizacion = {
-  id: number;
-};
 
 export const Cotizaciones = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -57,43 +53,45 @@ export const Cotizaciones = () => {
     setSearchParams({ page: page.toString(), limit: limit.toString() });
   }, [page, limit, setSearchParams]);
 
-  const { data: { cotizaciones = [], totalPages = 1 } = {}, isLoading } =
-    useQuery<{ cotizaciones: Cotizacion[]; totalPages: number }>({
-      queryKey: [
-        "cotizaciones",
-        debouncedSearch,
-        filter,
-        limit,
-        page - 1,
-        columnOrder,
-      ],
-      queryFn: async () => {
-        try {
-          const { data } = await axios.get(`${apiUrl}/admin/invoices`, {
-            params: {
-              countryCode,
-              name: debouncedSearch,
-              status: filter,
-              limit: Number(limit),
-              page: page - 1,
-              idOrder: columnOrder ? "asc" : "desc",
-            },
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            },
-          });
-          return data;
-        } catch (error) {
-          if (error instanceof AxiosError && error.status === 401) {
-            navigate("/login");
-          } else {
-            console.error("Unexpected error:", error);
-          }
-          return [];
+  const {
+    data: { cotizaciones = [], totalCount: totalPages = 1 } = {},
+    isLoading,
+  } = useQuery({
+    queryKey: [
+      "cotizaciones",
+      debouncedSearch,
+      filter,
+      limit,
+      page - 1,
+      columnOrder,
+    ],
+    queryFn: async () => {
+      try {
+        const { data } = await axios.get(`${apiUrl}/admin/invoices`, {
+          params: {
+            countryCode,
+            name: debouncedSearch,
+            status: filter,
+            limit: Number(limit),
+            page: page - 1,
+            idOrder: columnOrder ? "asc" : "desc",
+          },
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        });
+        return data;
+      } catch (error) {
+        if (error instanceof AxiosError && error.status === 401) {
+          navigate("/login");
+        } else {
+          console.error("Unexpected error:", error);
         }
-      },
-      // staleTime: 5 * 60 * 1000,
-    });
+        return [];
+      }
+    },
+    refetchOnWindowFocus: false,
+  });
 
   const { data: { totalCount, pendingInvoices, sendInvoices } = {} } = useQuery(
     {
@@ -119,31 +117,32 @@ export const Cotizaciones = () => {
           return [];
         }
       },
+      staleTime: 5 * 60 * 1000,
     }
   );
 
   const columns = [
     {
-      header: "Nro",
+      header: "No.",
       accessorKey: "id",
       cell: ({ getValue }: { getValue: () => any }) => (
         <div className="text-center">{getValue()}</div>
       ),
     },
     {
-      header: "Nombre",
+      header: "Name",
       accessorKey: "name",
     },
     {
-      header: "Empresa",
+      header: "Company",
       accessorKey: "company",
     },
     {
-      header: "Fecha",
+      header: "Date",
       accessorKey: "createdAt",
       cell: ({ getValue }: { getValue: () => any }) => {
         const date = new Date(getValue());
-        return date.toLocaleDateString("es-ES", {
+        return date.toLocaleDateString("en-US", {
           day: "2-digit",
           month: "2-digit",
           year: "numeric",
@@ -151,7 +150,7 @@ export const Cotizaciones = () => {
       },
     },
     {
-      header: "Estatus",
+      header: "Status",
       accessorKey: "status",
       cell: ({ getValue }: { getValue: () => any }) => {
         return (
@@ -189,13 +188,13 @@ export const Cotizaciones = () => {
         />
         <div className="w-full h-auto bg-white rounded-3xl shadow-lg p-8 mb-12 text-gray-600">
           <div className="mb-6 flex justify-between items-center">
-            <h1 className="text-2xl font-medium text-center">Cotizaciones</h1>
+            <h1 className="text-2xl font-medium text-center">Quotes</h1>
             {user.roleId === 4 || user.roleId === 5 ? null : (
               <button
                 className="cursor-pointer hover:bg-red-400 bg-red-500 rounded-lg text-white p-4 hover:shadow-lg transition-all"
                 onClick={() => navigate("/nueva-cotizacion")}
               >
-                CREAR COTIZACIÓN
+                CREATE QUOTE
               </button>
             )}
           </div>
@@ -209,7 +208,7 @@ export const Cotizaciones = () => {
               />
               <input
                 type="text"
-                placeholder="Buscar..."
+                placeholder="Search..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="p-2 rounded-lg outline-none w-[450px]"
@@ -217,7 +216,7 @@ export const Cotizaciones = () => {
             </div>
             <div className="flex justify-end pb-6">
               <SelectTable
-                label="Filtrar por estatus"
+                label="Filter by status"
                 selectOptions={opcionesSelect}
                 onChange={(e) => {
                   setFilter(e.target.value);
@@ -226,7 +225,7 @@ export const Cotizaciones = () => {
               />
             </div>
             <div className="border-2 border-gray-200 rounded-lg p-2 flex gap-5 items-center">
-              <p>Mostrar</p>
+              <p>Show</p>
               <select
                 className="select-registros"
                 value={limit || ""}
@@ -240,7 +239,7 @@ export const Cotizaciones = () => {
                   </option>
                 ))}
               </select>
-              <p>registros</p>
+              <p>records</p>
             </div>
           </div>
           <Table
@@ -268,7 +267,7 @@ export const Cotizaciones = () => {
               </div>
               <div>
                 <p>
-                  Página {page} de {totalPages}
+                  Page {page} of {totalPages}
                 </p>
               </div>
               <div className="flex gap-5 items-center p-2 hover:bg-gray-200">

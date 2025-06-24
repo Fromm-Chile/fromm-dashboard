@@ -33,45 +33,45 @@ export const HistorialCliente = () => {
           className="cursor-pointer hover:text-red-600"
           onClick={() => navigate(-1)}
         >
-          Volver
+          Back
         </button>
       </div>
       <div className="max-w-[1150px] mx-auto bg-white shadow-lg rounded-lg p-6">
         <h1 className="text-3xl font-bold text-red-500 pb-4 mt-2 mb-4">
-          Historial del Cliente
+          Client History
         </h1>
         <div className="mb-6">
           <h2 className="text-xl font-semibold text-gray-700 mb-2">
-            Información del Usuario
+            User Information
           </h2>
           <div className="bg-gray-100 p-4 rounded-lg ">
             <div className="flex gap-20 mb-5">
               <div>
                 <p className="text-gray-700">
-                  <strong>Nombre:</strong>{" "}
+                  <strong>Name:</strong>{" "}
                   {invoices[0]?.user.name ||
                     contacts[0]?.name ||
-                    "No disponible"}
+                    "Not available"}
                 </p>
                 <p className="text-gray-700">
                   <strong>Email:</strong>{" "}
                   {invoices[0]?.user.email ||
                     contacts[0]?.email ||
-                    "No disponible"}
+                    "Not available"}
                 </p>
               </div>
               <div>
                 <p className="text-gray-700">
-                  <strong>Teléfono:</strong>{" "}
+                  <strong>Phone:</strong>{" "}
                   {invoices[0]?.user.phone ||
                     contacts[0]?.phone ||
-                    "No registrado"}
+                    "Not registered"}
                 </p>
                 <p className="text-gray-700">
-                  <strong>Empresa:</strong>{" "}
+                  <strong>Company:</strong>{" "}
                   {invoices[0]?.user.company ||
                     contacts[0]?.company ||
-                    "No disponible"}
+                    "Not available"}
                 </p>
               </div>
             </div>
@@ -80,17 +80,17 @@ export const HistorialCliente = () => {
         {invoices.length > 0 && (
           <div className="mb-6">
             <h2 className="text-xl font-semibold text-gray-700 mb-2">
-              Historial de Cotizaciones
+              Quotes History
             </h2>
             <div className="overflow-x-auto">
               <table className="min-w-full bg-white border border-gray-200 rounded-lg">
                 <thead className="bg-gray-200 text-gray-700">
                   <tr>
-                    <th className="px-4 py-2 text-left">#Cotización</th>
-                    <th className="px-4 py-2 text-left">Estado</th>
-                    <th className="px-4 py-2 text-left">Comentario</th>
-                    <th className="px-4 py-2 text-left">Monto</th>
-                    <th className="px-4 py-2 text-left">Fecha</th>
+                    <th className="px-4 py-2 text-left">#Quote</th>
+                    <th className="px-4 py-2 text-left">Status</th>
+                    <th className="px-4 py-2 text-left">Comment</th>
+                    <th className="px-4 py-2 text-left">Amount</th>
+                    <th className="px-4 py-2 text-left">Date</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -102,22 +102,22 @@ export const HistorialCliente = () => {
                         {invoice.invoiceEvents[0]?.comment}
                       </td>
                       <td className="px-4 py-2">
-                        {new Intl.NumberFormat("es-CL", {
+                        {new Intl.NumberFormat("en-US", {
                           style: "currency",
-                          currency: "CLP",
+                          currency: "USD",
                         }).format(invoice.totalAmount || 0)}
                       </td>
                       <td className="px-4 py-2">
                         {invoice.updatedAt
                           ? new Date(invoice.updatedAt).toLocaleDateString(
-                              "es-ES",
+                              "en-US",
                               {
                                 day: "2-digit",
                                 month: "2-digit",
                                 year: "numeric",
                               }
                             )
-                          : "No disponible"}
+                          : "Not available"}
                       </td>
                     </tr>
                   ))}
@@ -129,16 +129,16 @@ export const HistorialCliente = () => {
         {contacts.length > 0 && (
           <div>
             <h2 className="text-xl font-semibold text-gray-700 mb-2">
-              Historial de Mensajes
+              Messages History
             </h2>
             <div className="overflow-x-auto">
               <table className="min-w-full bg-white border border-gray-200 rounded-lg">
                 <thead className="bg-gray-200 text-gray-700">
                   <tr>
                     <th className="px-4 py-2 text-left">ID</th>
-                    <th className="px-4 py-2 text-left">Mensaje</th>
-                    <th className="px-4 py-2 text-left">Estado</th>
-                    <th className="px-4 py-2 text-left">Fecha</th>
+                    <th className="px-4 py-2 text-left">Message</th>
+                    <th className="px-4 py-2 text-left">Status</th>
+                    <th className="px-4 py-2 text-left">Date</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -150,14 +150,14 @@ export const HistorialCliente = () => {
                       <td className="px-4 py-2">
                         {message.updatedAt
                           ? new Date(message.updatedAt).toLocaleDateString(
-                              "es-ES",
+                              "en-US",
                               {
                                 day: "2-digit",
                                 month: "2-digit",
                                 year: "numeric",
                               }
                             )
-                          : "No disponible"}
+                          : "Not available"}
                       </td>
                     </tr>
                   ))}

@@ -17,8 +17,8 @@ type FormData = {
 };
 
 const schema = yup.object().shape({
-  email: yup.string().email("Email no válido").required("Campo requerido"),
-  password: yup.string().required("Campo requerido"),
+  email: yup.string().email("Invalid email").required("Required field"),
+  password: yup.string().required("Required field"),
 });
 
 export const LogIn = () => {
@@ -60,9 +60,9 @@ export const LogIn = () => {
       if (axios.isAxiosError(error)) {
         const axiosError = error as AxiosError;
         if (axiosError.response?.status === 401) {
-          alert("Credenciales incorrectas");
+          alert("Incorrect credentials");
         } else {
-          alert("Error al iniciar sesión");
+          alert("Error logging in");
         }
       }
     } finally {
@@ -85,7 +85,7 @@ export const LogIn = () => {
                   className="mx-auto h-10 w-auto"
                 />
                 <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
-                  Ingresa al sistema administrativo
+                  Log in to the admin system
                 </h2>
               </div>
 
@@ -96,7 +96,7 @@ export const LogIn = () => {
                       htmlFor="email"
                       className="block text-sm/6 font-medium text-gray-900"
                     >
-                      Correo Electrónico
+                      Email
                     </label>
                     <InputController
                       name="email"
@@ -112,7 +112,7 @@ export const LogIn = () => {
                         htmlFor="password"
                         className="block text-sm/6 font-medium text-gray-900"
                       >
-                        Contraseña
+                        Password
                       </label>
                       <div className="text-sm">
                         <a
@@ -120,7 +120,7 @@ export const LogIn = () => {
                           className="font-semibold text-red-600 hover:text-red-500"
                           onClick={() => setPasswordModal(true)}
                         >
-                          Olvidaste tu contraseña?
+                          Forgot your password?
                         </a>
                       </div>
                     </div>
@@ -140,7 +140,7 @@ export const LogIn = () => {
                       className="flex w-full justify-center rounded-md bg-red-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-red-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 cursor-pointer"
                       onClick={handleSubmit(handleSignIn)}
                     >
-                      Ingresar
+                      Log In
                     </button>
                   </div>
                 </form>
@@ -151,13 +151,11 @@ export const LogIn = () => {
       )}
       {passwordModal && (
         <ModalConfirmacion
-          // error={error || ""}
-          // isLoading={modalLoader}
           isOpen={passwordModal}
           onCancel={() => setPasswordModal(false)}
           text={
             <p>
-              Debes solicitar una nueva contraseña al administrador general!
+              You must request a new password from the general administrator!
             </p>
           }
           onSubmit={async () => {

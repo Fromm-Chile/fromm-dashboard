@@ -91,7 +91,7 @@ export const Layout = () => {
       <div className="w-full h-[100vh] overflow-y-scroll">
         <header className="mb-5 text-3xl font-medium flex justify-between items-center m-auto bg-white py-2 px-20">
           <div className="flex gap-5 items-center text-gray-600">
-            <h1 className="text-xl">Hola {name}</h1>
+            <h1 className="text-xl">Hello, {name}</h1>
             {roleId === 1 && (
               <select
                 name="pais"
@@ -119,7 +119,7 @@ export const Layout = () => {
             onClick={handleSignOut}
           >
             <img src="/icons/log-out.svg" width={30} height={30} />
-            <p>Cerrar sesión</p>
+            <p>Log out...</p>
           </div>
         </header>
         <div className="flex-1 min-w-[1200px] w-[1200px] h-[100vh] m-auto">

@@ -208,29 +208,29 @@ export const DetalleCotizacion = () => {
               className="cursor-pointer hover:text-red-600"
               onClick={() => navigate(-1)}
             >
-              Volver
+              Back
             </button>
           </div>
           <h1 className="text-3xl font-bold text-red-500 pb-4 mt-2 mb-4">
-            Detalle de Cotización
+            Quote Details
           </h1>
           <div className="w-full max-w-[1150px] mx-auto bg-white shadow-lg rounded-lg p-6">
             <div className="mb-6">
               <h2 className="text-xl font-semibold text-gray-700 mb-2">
-                Información General
+                General Information
               </h2>
               <div className="bg-gray-100 p-4 rounded-lg flex justify-between items-center">
                 <div className="flex flex-col pr-10">
                   <p className="text-gray-700">
-                    <strong>Cotización #{cotizacion.id}</strong>
+                    <strong>Quote #{cotizacion.id}</strong>
                   </p>
                   <p className="text-gray-700">
-                    <strong>Fecha de creación:</strong>{" "}
+                    <strong>Creation date:</strong>{" "}
                     {cotizacion.createdAt
                       ? new Date(cotizacion.createdAt).toLocaleDateString(
-                          "es-ES"
+                          "en-US"
                         )
-                      : "No disponible"}
+                      : "Not available"}
                   </p>
                   <p
                     className={`p-2 rounded-lg text-center w-fit text-white mt-2 ${
@@ -253,7 +253,7 @@ export const DetalleCotizacion = () => {
                   </p>
                   {cotizacion.statusR.name === "VENDIDO" && (
                     <p className="text-gray-700 text-2xl">
-                      <strong>Monto neto de la venta:</strong> USD{" "}
+                      <strong>Net sale amount:</strong> USD{" "}
                       {formatAsUSD(cotizacion.totalAmount)}
                     </p>
                   )}
@@ -274,7 +274,7 @@ export const DetalleCotizacion = () => {
                               { value: "perdida", texto: "PERDIDA" },
                             ]
                       }
-                      label="Estado de la cotización"
+                      label="Quote status"
                       onChange={(e) => {
                         setEstatus(e.target.value);
                         handleClick(e.target.value);
@@ -286,7 +286,7 @@ export const DetalleCotizacion = () => {
                   cotizacion.statusR.name === "DERIVADA" ? null : (
                     <div className="mt-2 flex gap-2 justify-center text-green-500 font-bold border border-gray-200 bg-white rounded-lg p-2 hover:bg-gray-100 hover:text-green-600">
                       <a target="_blank" href={cotizacion.invoiceURL}>
-                        VER COTIZACIÓN
+                        VIEW QUOTE
                       </a>
                       <img src="/icons/clip.svg" width={20} height={20} />
                     </div>
@@ -298,7 +298,7 @@ export const DetalleCotizacion = () => {
                       link=""
                       whiteButton
                     >
-                      Agregar seguimiento
+                      Add follow-up
                     </Button>
                   )}
                 </div>
@@ -306,35 +306,35 @@ export const DetalleCotizacion = () => {
             </div>
             <div className="mb-6">
               <h2 className="text-xl font-semibold text-gray-700 mb-2">
-                Información del Usuario
+                User Information
               </h2>
               <div className="bg-gray-100 p-4 rounded-lg ">
                 <div className="flex gap-20 mb-5">
                   <div>
                     <p className="text-gray-700">
-                      <strong>Nombre:</strong>{" "}
-                      {cotizacion.user?.name || "No disponible"}
+                      <strong>Name:</strong>{" "}
+                      {cotizacion.user?.name || "Not available"}
                     </p>
                     <p className="text-gray-700">
                       <strong>Email:</strong>{" "}
-                      {cotizacion.user?.email || "No disponible"}
+                      {cotizacion.user?.email || "Not available"}
                     </p>
                   </div>
                   <div>
                     <p className="text-gray-700">
-                      <strong>Teléfono:</strong>{" "}
-                      {cotizacion.user?.phone || "No registrado"}
+                      <strong>Phone:</strong>{" "}
+                      {cotizacion.user?.phone || "Not registered"}
                     </p>
                     <p className="text-gray-700">
-                      <strong>Empresa:</strong>{" "}
-                      {cotizacion.user?.company || "No registrada"}
+                      <strong>Company:</strong>{" "}
+                      {cotizacion.user?.company || "Not registered"}
                     </p>
                   </div>
                 </div>
                 <div>
                   <p className="text-gray-700">
-                    <strong>Mensaje:</strong>{" "}
-                    {cotizacion?.message || "Sin mensaje."}
+                    <strong>Message:</strong>{" "}
+                    {cotizacion?.message || "No message."}
                   </p>
                 </div>
               </div>
@@ -342,15 +342,15 @@ export const DetalleCotizacion = () => {
             {cotizacion.invoiceDetails?.length > 0 && (
               <div>
                 <h2 className="text-xl font-semibold text-gray-700 mb-2">
-                  Detalles de la Solicitud
+                  Request Details
                 </h2>
                 <div className="overflow-x-auto">
                   <table className="min-w-full bg-white border border-gray-200 rounded-lg">
                     <thead className="bg-gray-200 text-gray-700">
                       <tr>
-                        <th className="px-4 py-2 text-left">Código</th>
-                        <th className="px-4 py-2 text-left">Producto</th>
-                        <th className="px-4 py-2 text-left">Cantidad</th>
+                        <th className="px-4 py-2 text-left">Code</th>
+                        <th className="px-4 py-2 text-left">Product</th>
+                        <th className="px-4 py-2 text-left">Quantity</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -371,16 +371,16 @@ export const DetalleCotizacion = () => {
             )}
             <div className="mb-6">
               <h2 className="text-xl font-semibold text-gray-700 mb-2 mt-5">
-                Historial solicitud
+                Request History
               </h2>
               <div className="overflow-x-auto">
                 <table className="min-w-full bg-white border border-gray-200 rounded-lg">
                   <thead className="bg-gray-200 text-gray-700">
                     <tr>
-                      <th className="px-4 py-2 text-left">Estado</th>
-                      <th className="px-4 py-2 text-left">Comentario</th>
-                      <th className="px-4 py-2 text-left">Realizado por</th>
-                      <th className="px-4 py-2 text-left">Fecha</th>
+                      <th className="px-4 py-2 text-left">Status</th>
+                      <th className="px-4 py-2 text-left">Comment</th>
+                      <th className="px-4 py-2 text-left">Performed by</th>
+                      <th className="px-4 py-2 text-left">Date</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -388,22 +388,22 @@ export const DetalleCotizacion = () => {
                       <tr key={event.id} className="border-t border-gray-200">
                         <td className="px-4 py-2">{event.status}</td>
                         <td className="px-4 py-2">
-                          {event.comment || "Sin comentario"}
+                          {event.comment || "No comment"}
                         </td>
                         <td className="px-4 py-2">
-                          {event.adminUser?.name || "Cliente"}
+                          {event.adminUser?.name || "Client"}
                         </td>
                         <td className="px-4 py-2">
                           {event.createdAt
                             ? new Date(event.createdAt).toLocaleDateString(
-                                "es-ES",
+                                "en-US",
                                 {
                                   day: "2-digit",
                                   month: "2-digit",
                                   year: "numeric",
                                 }
                               )
-                            : "No disponible"}
+                            : "Not available"}
                         </td>
                       </tr>
                     ))}
@@ -422,23 +422,23 @@ export const DetalleCotizacion = () => {
           onCancel={() => handleState("enviada", false)}
           text={
             <p>
-              Cambar estado a <strong>ENVIADA</strong>
+              Change status to <strong>SENT</strong>
             </p>
           }
           onSubmit={handleStatusEnviada}
-          titleComment="Comentario (opcional)"
+          titleComment="Comment (optional)"
         >
           {file ? (
             <div className="h-48 rounded-lg border-2 border-gray-300 bg-gray-50 flex flex-col justify-center px-3 mt-3 items-center shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
               <p className="text-gray-700 mb-2">
-                <strong>Archivo seleccionado:</strong>
+                <strong>Selected file:</strong>
               </p>
               <p>{file.name}</p>
               <button
                 className="bg-red-500 text-white rounded-lg px-4 py-2 mt-4 cursor-pointer hover:bg-red-600"
                 onClick={() => setFile(null)}
               >
-                Cambiar archivo
+                Change file
               </button>
             </div>
           ) : (
@@ -454,10 +454,10 @@ export const DetalleCotizacion = () => {
                           src="https://img.icons8.com/dusk/64/000000/file.png"
                         />
                         <span className="block text-gray-500 font-semibold">
-                          Arrastra &amp; suelta tu cotización aquí
+                          Drag &amp; drop your quote here
                         </span>
                         <span className="block text-gray-400 font-normal mt-1">
-                          o haz click para subir
+                          or click to upload
                         </span>
                       </div>
                       <input
@@ -470,7 +470,7 @@ export const DetalleCotizacion = () => {
                           const maxSizeInBytes = 4 * 1024 * 1024;
                           if (file) {
                             if (file.size > maxSizeInBytes) {
-                              alert("Documento no debe exceder los 4 MB!");
+                              alert("Document must not exceed 4 MB!");
                               e.target.value = "";
                             } else {
                               setFile(file);
@@ -497,19 +497,19 @@ export const DetalleCotizacion = () => {
           onCancel={() => handleState("derivada", false)}
           text={
             <p>
-              Cambar estado a <strong>DERIVADA</strong>
+              Change status to <strong>FORWARDED</strong>
             </p>
           }
           onSubmit={handleStatusDerivado}
-          titleComment="Comentario (opcional)"
+          titleComment="Comment (optional)"
         >
           <div className="w-[80%] mx-auto mt-5">
             <p className="text-lg">
-              ☑️ Derivar a <strong>Gerencia Comerial</strong>
+              ☑️ Forward to <strong>Sales Management</strong>
             </p>
             {/* <SelectTable
-              label="Selecciona el area"
-              selectOptions={[{ value: "ventas", texto: "Gerencia Comercial" }]}
+              label="Select area"
+              selectOptions={[{ value: "ventas", texto: "Sales Management" }]}
               onChange={(e) => console.log(e.target.value)}
               value=""
             /> */}
@@ -524,11 +524,11 @@ export const DetalleCotizacion = () => {
           onCancel={() => handleState("seguimiento", false)}
           text={
             <p>
-              Cambar estado a <strong>SEGUIMIENTO</strong>
+              Change status to <strong>FOLLOW-UP</strong>
             </p>
           }
           onSubmit={handleStatusSegumiento}
-          titleComment="Ingresa los detalles del seguimiento*"
+          titleComment="Enter follow-up details*"
         ></ModalConfirmacion>
       )}
       {initialState.agregarSeguimiento && (
@@ -539,11 +539,11 @@ export const DetalleCotizacion = () => {
           onCancel={() => handleState("agregarSeguimiento", false)}
           text={
             <p>
-              Nuevo <strong>SEGUIMIENTO</strong>
+              New <strong>FOLLOW-UP</strong>
             </p>
           }
           onSubmit={handleStatusSegumiento}
-          titleComment="Ingresa los detalles del seguimiento*"
+          titleComment="Enter follow-up details*"
         ></ModalConfirmacion>
       )}
       {initialState.vendido && (
@@ -554,16 +554,16 @@ export const DetalleCotizacion = () => {
           onCancel={() => handleState("vendido", false)}
           text={
             <p>
-              Cambar estado a <strong>VENDIDO</strong>
+              Change status to <strong>SOLD</strong>
             </p>
           }
           onSubmit={handleStatusVenta}
-          titleComment="Comentario (opcional)"
+          titleComment="Comment (optional)"
         >
           <div className="flex flex-col items-center justify-center mt-5 w-[80%]">
             <label htmlFor="" className="self-start mb-1">
-              Ingresa el monto neto de la venta en{" "}
-              <strong>dólares americanos (USD)</strong>.
+              Enter the net sale amount in{" "}
+              <strong>US dollars (USD)</strong>.
             </label>
             <input
               type="number"
@@ -585,11 +585,11 @@ export const DetalleCotizacion = () => {
           onCancel={() => handleState("perdida", false)}
           text={
             <p>
-              Cambar estado a <strong>PERDIDA</strong>
+              Change status to <strong>LOST</strong>
             </p>
           }
           onSubmit={handleStatusPerdido}
-          titleComment="Ingresa el motivo de la perdida*"
+          titleComment="Enter the reason for the loss*"
         ></ModalConfirmacion>
       )}
     </>

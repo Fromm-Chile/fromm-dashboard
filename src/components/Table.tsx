@@ -82,7 +82,7 @@ export const Table = ({
       </table>
       {table.getPageCount() === 0 && (
         <div className="flex justify-center items-center h-28">
-          <p>No se encontraron resultados...</p>
+          <p>No results found...</p>
         </div>
       )}
     </div>
