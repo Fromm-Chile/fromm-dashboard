@@ -3,7 +3,7 @@ import { Table } from "../components/Table";
 import { useQuery } from "@tanstack/react-query";
 import { apiUrl } from "../assets/variables";
 import axios, { AxiosError } from "axios";
-import { useLocation, useNavigate, useSearchParams } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 import { useUserStore } from "../store/useUserStore";
 import { SelectTable } from "../components/SelectTable";
 import { useEffect, useState } from "react";
@@ -157,7 +157,7 @@ export const Cotizaciones = () => {
           <div
             className={`p-2 rounded-lg text-center text-white ${
               getValue() === "PENDIENTE"
-                ? "bg-gray-300 "
+                ? "bg-gray-300"
                 : getValue() === "ENVIADA"
                 ? "bg-green-400"
                 : getValue() === "VENDIDO"
@@ -171,7 +171,19 @@ export const Cotizaciones = () => {
                 : ""
             }`}
           >
-            {getValue()}
+            {getValue() === "PENDIENTE"
+              ? "PENDING"
+              : getValue() === "ENVIADA"
+              ? "SENT"
+              : getValue() === "VENDIDO"
+              ? "SOLD"
+              : getValue() === "SEGUIMIENTO"
+              ? "FOLLOW-UP"
+              : getValue() === "DERIVADA"
+              ? "REFERRED"
+              : getValue() === "PERDIDA"
+              ? "LOST"
+              : ""}
           </div>
         );
       },

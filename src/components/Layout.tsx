@@ -91,7 +91,7 @@ export const Layout = () => {
       <div className="w-full h-[100vh] overflow-y-scroll">
         <header className="mb-5 text-3xl font-medium flex justify-between items-center m-auto bg-white py-2 px-20">
           <div className="flex gap-5 items-center text-gray-600">
-            <h1 className="text-xl">Hello, {name}</h1>
+            <h1 className="text-xl">Hello, {name}!</h1>
             {roleId === 1 && (
               <select
                 name="pais"

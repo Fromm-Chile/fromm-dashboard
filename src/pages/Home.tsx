@@ -8,7 +8,7 @@ export const Home = () => {
         {/* Welcome Section */}
         <div className="mb-6">
           <h1 className="text-3xl font-bold text-red-500 pb-4">
-            Fromm Web Admin Panel (DEMO)
+            Fromm Dashboard (DEMO)
           </h1>
           <p className="text-gray-700 text-lg">
             This is the centralized system to manage quotes, contacts, and

@@ -83,7 +83,7 @@ export const Clientes = () => {
       header: "Company",
       accessorKey: "company",
       cell: ({ getValue }: { getValue: () => any }) => (
-        <div className="text-center">{getValue() || "No record"}</div>
+        <div>{getValue() || "No record"}</div>
       ),
     },
   ];

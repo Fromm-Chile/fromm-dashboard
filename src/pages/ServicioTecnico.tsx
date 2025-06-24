@@ -159,7 +159,19 @@ export const ServicioTecnico = () => {
                 : ""
             }`}
           >
-            {getValue()}
+            {getValue() === "PENDIENTE"
+              ? "PENDING"
+              : getValue() === "ENVIADA"
+              ? "SENT"
+              : getValue() === "VENDIDO"
+              ? "SOLD"
+              : getValue() === "SEGUIMIENTO"
+              ? "FOLLOW-UP"
+              : getValue() === "DERIVADA"
+              ? "REFERRED"
+              : getValue() === "PERDIDA"
+              ? "LOST"
+              : ""}
           </div>
         );
       },
