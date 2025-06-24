@@ -91,7 +91,7 @@ export const NuevaCotizacion = () => {
         return [];
       }
     },
-    staleTime: 5 * 60 * 1000,
+    refetchOnWindowFocus: false,
   });
 
   const selectOptions = users.map((user) => ({

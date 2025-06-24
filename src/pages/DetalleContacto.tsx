@@ -42,7 +42,7 @@ export const DetalleContacto = () => {
       });
       return data;
     },
-    staleTime: 5 * 60 * 1000,
+    refetchOnWindowFocus: false,
   });
 
   const navigate = useNavigate();

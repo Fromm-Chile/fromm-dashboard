@@ -66,7 +66,7 @@ export const Inicio = () => {
         montoTotal: data.montoTotal,
       };
     },
-    staleTime: 5 * 60 * 1000,
+    refetchOnWindowFocus: false,
   });
 
   const { data: cotizacionesVendidas = 0, refetch: refetchCount } = useQuery({

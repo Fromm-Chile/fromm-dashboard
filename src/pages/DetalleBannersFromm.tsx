@@ -38,7 +38,7 @@ export const DetalleBannersFromm = () => {
       return data;
     },
     enabled: !!id,
-    staleTime: 5 * 60 * 1000,
+    refetchOnWindowFocus: false,
   });
 
   const changeOrderHandler = async () => {
