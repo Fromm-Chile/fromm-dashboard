@@ -238,7 +238,7 @@ export const NuevaCotizacion = () => {
             className="cursor-pointer hover:text-red-600"
             onClick={() => navigate("/cotizaciones")}
           >
-            Back
+            Go back
           </button>
         </div>
       </div>

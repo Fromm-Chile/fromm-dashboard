@@ -208,7 +208,7 @@ export const DetalleCotizacion = () => {
               className="cursor-pointer hover:text-red-600"
               onClick={() => navigate(-1)}
             >
-              Back
+              Go back
             </button>
           </div>
           <h1 className="text-3xl font-bold text-red-500 pb-4 mt-2 mb-4">
@@ -264,14 +264,14 @@ export const DetalleCotizacion = () => {
                       selectOptions={
                         cotizacion.statusR.name === "PENDIENTE"
                           ? [
-                              { value: "enviada", texto: "ENVIADA" },
-                              { value: "derivada", texto: "DERIVADA" },
+                              { value: "enviada", texto: "SENT" },
+                              { value: "derivada", texto: "REFERRED" },
                             ]
                           : [
-                              { value: "enviada", texto: "ENVIADA" },
-                              { value: "seguimiento", texto: "SEGUIMIENTO" },
-                              { value: "vendido", texto: "VENDIDO" },
-                              { value: "perdida", texto: "PERDIDA" },
+                              { value: "enviada", texto: "SENT" },
+                              { value: "seguimiento", texto: "FOLLOW-UP" },
+                              { value: "vendido", texto: "SOLD" },
+                              { value: "perdida", texto: "LOST" },
                             ]
                       }
                       label="Quote status"
@@ -562,8 +562,7 @@ export const DetalleCotizacion = () => {
         >
           <div className="flex flex-col items-center justify-center mt-5 w-[80%]">
             <label htmlFor="" className="self-start mb-1">
-              Enter the net sale amount in{" "}
-              <strong>US dollars (USD)</strong>.
+              Enter the net sale amount in <strong>US dollars (USD)</strong>.
             </label>
             <input
               type="number"

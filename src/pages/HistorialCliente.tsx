@@ -33,7 +33,7 @@ export const HistorialCliente = () => {
           className="cursor-pointer hover:text-red-600"
           onClick={() => navigate(-1)}
         >
-          Back
+          Go back
         </button>
       </div>
       <div className="max-w-[1150px] mx-auto bg-white shadow-lg rounded-lg p-6">

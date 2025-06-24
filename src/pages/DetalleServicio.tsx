@@ -68,7 +68,7 @@ export const DetalleServicio = () => {
               className="cursor-pointer hover:text-red-600"
               onClick={() => navigate(-1)}
             >
-              Back
+              Go back
             </button>
           </div>
           <h1 className="text-3xl font-bold text-red-500 pb-4 mt-2 mb-4">
@@ -86,8 +86,7 @@ export const DetalleServicio = () => {
                       <strong>Contact:</strong> #{contacto.id}
                     </p>
                     <p className="text-gray-700">
-                      <strong>Name:</strong>{" "}
-                      {contacto.name || "Not available"}
+                      <strong>Name:</strong> {contacto.name || "Not available"}
                     </p>
                     <p className="text-gray-700">
                       <strong>Email:</strong>{" "}
@@ -102,6 +101,10 @@ export const DetalleServicio = () => {
                     <p className="text-gray-700">
                       <strong>Company:</strong>{" "}
                       {contacto.company || "Not registered"}
+                    </p>
+                    <p className="text-gray-700">
+                      <strong>Equipment:</strong>{" "}
+                      {contacto.equipment || "Not registered"}
                     </p>
                     <p
                       className={`p-2 rounded-lg text-center w-fit text-white mt-2 ${

@@ -10,12 +10,12 @@ import { useEffect, useState } from "react";
 import useDebounce from "../hooks/useDebounce";
 
 const opcionesSelect = [
-  { id: "PENDIENTE", texto: "Pendiente", value: "PENDIENTE" },
-  { id: "ENVIADA", texto: "Enviada", value: "ENVIADA" },
-  { id: "VENDIDO", texto: "Vendido", value: "VENDIDO" },
-  { id: "SEGUIMIENTO", texto: "Seguimiento", value: "SEGUIMIENTO" },
-  { id: "DERIVADA", texto: "Derivada", value: "DERIVADA" },
-  { id: "PERDIDA", texto: "Perdida", value: "PERDIDA" },
+  { id: "PENDIENTE", texto: "PENDING", value: "PENDIENTE" },
+  { id: "ENVIADA", texto: "SENT", value: "ENVIADA" },
+  { id: "VENDIDO", texto: "SOLD", value: "VENDIDO" },
+  { id: "SEGUIMIENTO", texto: "FOLLOW-UP", value: "SEGUIMIENTO" },
+  { id: "DERIVADA", texto: "REFERRED", value: "DERIVADA" },
+  { id: "PERDIDA", texto: "LOST", value: "PERDIDA" },
 ];
 
 export const Cotizaciones = () => {

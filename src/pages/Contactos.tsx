@@ -10,9 +10,9 @@ import { useEffect, useState } from "react";
 import useDebounce from "../hooks/useDebounce";
 
 const opcionesSelect = [
-  { id: "PENDIENTE", texto: "Pendiente", value: "PENDIENTE" },
-  { id: "COTIZACIÓN", texto: "Cotización", value: "COTIZACIÓN" },
-  { id: "DERIVADA", texto: "Derivada", value: "DERIVADA" },
+  { id: "PENDIENTE", texto: "PENDING", value: "PENDIENTE" },
+  { id: "COTIZACIÓN", texto: "QUOTED", value: "COTIZACIÓN" },
+  { id: "DERIVADA", texto: "REFERRED", value: "DERIVADA" },
 ];
 
 export const Contactos = () => {
@@ -164,16 +164,10 @@ export const Contactos = () => {
           >
             {getValue() === "PENDIENTE"
               ? "PENDING"
-              : getValue() === "ENVIADA"
-              ? "SENT"
-              : getValue() === "VENDIDO"
-              ? "SOLD"
-              : getValue() === "SEGUIMIENTO"
-              ? "FOLLOW-UP"
+              : getValue() === "COTIZACIÓN"
+              ? "QUOTED"
               : getValue() === "DERIVADA"
               ? "REFERRED"
-              : getValue() === "PERDIDA"
-              ? "LOST"
               : ""}
           </div>
         );

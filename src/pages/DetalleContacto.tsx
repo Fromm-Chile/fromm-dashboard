@@ -139,7 +139,7 @@ export const DetalleContacto = () => {
               className="cursor-pointer hover:text-red-600"
               onClick={() => navigate(-1)}
             >
-              Back
+              Go back
             </button>
           </div>
           <h1 className="text-3xl font-bold text-red-500 pb-4 mt-2 mb-4">
@@ -157,8 +157,7 @@ export const DetalleContacto = () => {
                       <strong>Contact:</strong> #{contacto.id}
                     </p>
                     <p className="text-gray-700">
-                      <strong>Name:</strong>{" "}
-                      {contacto.name || "Not available"}
+                      <strong>Name:</strong> {contacto.name || "Not available"}
                     </p>
                     <p className="text-gray-700">
                       <strong>Email:</strong>{" "}
@@ -197,7 +196,7 @@ export const DetalleContacto = () => {
                       selectOptions={[
                         { value: "cotizado", texto: "QUOTED" },
                         { value: "servicio", texto: "SERVICE" },
-                        { value: "derivada", texto: "FORWARDED" },
+                        { value: "derivada", texto: "REFERRED" }, // changed from "FORWARDED" to "REFERRED"
                       ]}
                       label="Contact status"
                       onChange={(e) => {
@@ -255,7 +254,7 @@ export const DetalleContacto = () => {
               onCancel={() => handleState("derivada", false)}
               text={
                 <p>
-                  Change status to <strong>FORWARDED</strong>
+                  Change status to <strong>REFERRED</strong>
                 </p>
               }
               onSubmit={handleStatusDerivado}
@@ -307,7 +306,8 @@ export const DetalleContacto = () => {
             >
               <div>
                 <p className="text-gray-700 text-center">
-                  Are you sure you want to create a <strong>new quote</strong> from this message's information?
+                  Are you sure you want to create a <strong>new quote</strong>{" "}
+                  from this message's information?
                 </p>
               </div>
             </ModalConfirmacion>
@@ -328,7 +328,8 @@ export const DetalleContacto = () => {
             >
               <div>
                 <p className="text-gray-700 text-center">
-                  Are you sure you want to move this message to <strong>technical service</strong>?
+                  Are you sure you want to move this message to{" "}
+                  <strong>technical service</strong>?
                 </p>
               </div>
             </ModalConfirmacion>

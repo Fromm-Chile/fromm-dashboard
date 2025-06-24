@@ -10,8 +10,8 @@ import { useNavigate, useSearchParams } from "react-router";
 import useDebounce from "../hooks/useDebounce";
 
 const opcionesSelect = [
-  { id: "PENDIENTE", texto: "Pendiente", value: "PENDIENTE" },
-  { id: "FINALIZADO", texto: "Finalizado", value: "FINALIZADO" },
+  { id: "PENDIENTE", texto: "PENDING", value: "PENDIENTE" },
+  { id: "FINALIZADO", texto: "COMPLETED", value: "FINALIZADO" },
 ];
 
 export const ServicioTecnico = () => {
@@ -161,16 +161,8 @@ export const ServicioTecnico = () => {
           >
             {getValue() === "PENDIENTE"
               ? "PENDING"
-              : getValue() === "ENVIADA"
-              ? "SENT"
-              : getValue() === "VENDIDO"
-              ? "SOLD"
-              : getValue() === "SEGUIMIENTO"
-              ? "FOLLOW-UP"
-              : getValue() === "DERIVADA"
-              ? "REFERRED"
-              : getValue() === "PERDIDA"
-              ? "LOST"
+              : getValue() === "FINALIZADO"
+              ? "COMPLETED"
               : ""}
           </div>
         );
