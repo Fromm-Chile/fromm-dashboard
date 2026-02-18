@@ -15,6 +15,18 @@ const opcionesSelect = [
   { id: "DERIVADA", texto: "REFERRED", value: "DERIVADA" },
 ];
 
+const statusStyle: Record<string, string> = {
+  PENDIENTE: "bg-gray-100 text-gray-600",
+  "COTIZACIÓN": "bg-emerald-50 text-emerald-700",
+  DERIVADA: "bg-blue-50 text-blue-700",
+};
+
+const statusLabel: Record<string, string> = {
+  PENDIENTE: "PENDING",
+  "COTIZACIÓN": "QUOTED",
+  DERIVADA: "REFERRED",
+};
+
 export const Contactos = () => {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<string | null>(null);
@@ -150,137 +162,114 @@ export const Contactos = () => {
       header: "Status",
       accessorKey: "status.name",
       cell: ({ getValue }: { getValue: () => any }) => {
+        const val = getValue();
         return (
-          <div
-            className={`p-2 rounded-lg text-center text-white ${
-              getValue() === "PENDIENTE"
-                ? "bg-gray-400 "
-                : getValue() === "COTIZACIÓN"
-                ? "bg-green-400"
-                : getValue() === "DERIVADA"
-                ? "bg-blue-600"
-                : ""
+          <span
+            className={`inline-block px-2.5 py-1 rounded-full text-xs font-medium ${
+              statusStyle[val] || ""
             }`}
           >
-            {getValue() === "PENDIENTE"
-              ? "PENDING"
-              : getValue() === "COTIZACIÓN"
-              ? "QUOTED"
-              : getValue() === "DERIVADA"
-              ? "REFERRED"
-              : ""}
-          </div>
+            {statusLabel[val] || val}
+          </span>
         );
       },
     },
   ];
 
   return (
-    <>
-      <div className="pb-10">
-        <Summary
-          total={totalCount || 0}
-          pendiente={pendingContacts || 0}
-          enviada={invoiceContacts || 0}
-          tituloTotal="Received messages"
-          tituloPendiente="Pending messages"
-          tituloEnviada="Quote messages"
-        />
-        <div className="w-full h-auto bg-white rounded-3xl shadow-lg p-8 mb-12 text-gray-600">
-          <div className="mb-6 flex justify-between items-center">
-            <h1 className="text-2xl font-medium text-center">Contacts</h1>
-          </div>
-          <div className="flex items-center justify-around mb-4">
-            <div className="border-2 border-gray-200 rounded-lg flex gap-1 items-center w-[450px]">
-              <img
-                src="/icons/search.svg"
-                height={20}
-                width={20}
-                className="ml-2"
-              />
-              <input
-                type="text"
-                placeholder="Search..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="p-2 rounded-lg outline-none w-[450px]"
-              />
-            </div>
-            <div className="flex justify-end pb-6">
-              <SelectTable
-                label="Filter by status"
-                selectOptions={opcionesSelect}
-                onChange={(e) => {
-                  setFilter(e.target.value);
-                }}
-                value={filter || ""}
-              />
-            </div>
-            <div className="border-2 border-gray-200 rounded-lg p-2 flex gap-5 items-center">
-              <p>Show</p>
-              <select
-                className="select-registros"
-                value={limit || ""}
-                onChange={(e) => {
-                  setLimit(Number(e.target.value));
-                }}
-              >
-                {[10, 25, 50, 100].map((pageSize) => (
-                  <option key={pageSize} value={pageSize}>
-                    {pageSize}
-                  </option>
-                ))}
-              </select>
-              <p>records</p>
-            </div>
-          </div>
-          <Table
-            datosTabla={contactos}
-            columns={columns}
-            detailsRoute="contactos"
-            handlerColumnFilter={() => {
-              setColumnOrder((prev) => !prev);
-            }}
-            isLoading={isLoading}
-          />
-          {totalCount > 10 && (
-            <div className="flex gap-5 items-center justify-end mt-8">
-              <div className="border-2 border-gray-200 rounded-lg flex gap-5 items-center">
-                <div className="flex gap-5 items-center p-2 hover:bg-gray-200">
-                  <button
-                    onClick={() =>
-                      setPage((prev) => (prev > 0 ? prev - 1 : prev))
-                    }
-                    disabled={page === 1}
-                    className="cursor-pointer"
-                  >
-                    <img src="/icons/left-arrow.svg" height={20} width={20} />
-                  </button>
-                </div>
-                <div>
-                  <p>
-                    Page {page} of {totalPages}
-                  </p>
-                </div>
-                <div className="flex gap-5 items-center p-2 hover:bg-gray-200">
-                  <button
-                    onClick={() =>
-                      setPage((prev) => (prev < totalPages ? prev + 1 : prev))
-                    }
-                    className="cursor-pointer"
-                  >
-                    <img
-                      src="/icons/right-arrow-black.svg"
-                      height={20}
-                      width={20}
-                    />
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
+    <div className="pb-8">
+      <Summary
+        total={totalCount || 0}
+        pendiente={pendingContacts || 0}
+        enviada={invoiceContacts || 0}
+        tituloTotal="Received messages"
+        tituloPendiente="Pending messages"
+        tituloEnviada="Quote messages"
+      />
+      <div className="w-full bg-white border border-gray-200 rounded-xl p-6 mb-8">
+        <div className="mb-5 flex justify-between items-center">
+          <h1 className="text-lg font-semibold text-slate-800">Contacts</h1>
         </div>
+        <div className="flex items-center gap-4 mb-5 flex-wrap">
+          <div className="border border-gray-200 rounded-lg flex items-center flex-1 max-w-[400px]">
+            <img
+              src="/icons/search.svg"
+              height={16}
+              width={16}
+              className="ml-3 opacity-40"
+            />
+            <input
+              type="text"
+              placeholder="Search..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="px-3 py-2 rounded-lg outline-none w-full text-sm"
+            />
+          </div>
+          <SelectTable
+            label="Filter by status"
+            selectOptions={opcionesSelect}
+            onChange={(e) => {
+              setFilter(e.target.value);
+            }}
+            value={filter || ""}
+          />
+          <div className="flex items-center gap-2 text-sm text-slate-500">
+            <span>Show</span>
+            <select
+              className="border border-gray-200 rounded-lg px-2 py-1.5 text-sm bg-white"
+              value={limit || ""}
+              onChange={(e) => {
+                setLimit(Number(e.target.value));
+              }}
+            >
+              {[10, 25, 50, 100].map((pageSize) => (
+                <option key={pageSize} value={pageSize}>
+                  {pageSize}
+                </option>
+              ))}
+            </select>
+            <span>records</span>
+          </div>
+        </div>
+        <Table
+          datosTabla={contactos}
+          columns={columns}
+          detailsRoute="contactos"
+          handlerColumnFilter={() => {
+            setColumnOrder((prev) => !prev);
+          }}
+          isLoading={isLoading}
+        />
+        {totalCount > 10 && (
+          <div className="flex items-center justify-end mt-5 gap-2">
+            <button
+              onClick={() =>
+                setPage((prev) => (prev > 0 ? prev - 1 : prev))
+              }
+              disabled={page === 1}
+              className="p-2 rounded-lg hover:bg-gray-100 disabled:opacity-30 cursor-pointer transition-colors"
+            >
+              <img src="/icons/left-arrow.svg" height={16} width={16} />
+            </button>
+            <span className="text-sm text-slate-500 px-2">
+              Page {page} of {totalPages}
+            </span>
+            <button
+              onClick={() =>
+                setPage((prev) => (prev < totalPages ? prev + 1 : prev))
+              }
+              className="p-2 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors"
+            >
+              <img
+                src="/icons/right-arrow-black.svg"
+                height={16}
+                width={16}
+              />
+            </button>
+          </div>
+        )}
       </div>
-    </>
+    </div>
   );
 };

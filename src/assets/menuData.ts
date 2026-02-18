@@ -1,8 +1,19 @@
+import {
+  Home,
+  FileText,
+  MessageSquare,
+  Wrench,
+  Users,
+  BarChart3,
+  UserCog,
+  Image,
+  type LucideIcon,
+} from "lucide-react";
+
 type NavMenu = {
   id: number;
   name: string;
-  icon: string;
-  iconWhite?: string;
+  icon: LucideIcon;
   link: string;
 };
 
@@ -10,57 +21,49 @@ export const superAdminMenu: NavMenu[] = [
   {
     id: 1,
     name: "Home",
-    icon: "/icons/home.svg",
-    iconWhite: "/icons/homeW.svg",
+    icon: Home,
     link: "/inicio",
   },
   {
     id: 2,
     name: "Invoices",
-    icon: "/icons/cash.svg",
-    iconWhite: "/icons/cashW.svg",
+    icon: FileText,
     link: "/cotizaciones",
   },
   {
     id: 3,
     name: "Contacts",
-    icon: "/icons/contact.svg",
-    iconWhite: "/icons/contactW.svg",
+    icon: MessageSquare,
     link: "/contactos",
   },
   {
     id: 4,
     name: "Technical Service",
-    icon: "/icons/tool.svg",
-    iconWhite: "/icons/toolW.svg",
+    icon: Wrench,
     link: "/servicios",
   },
   {
     id: 5,
     name: "Clients",
-    icon: "/icons/users.svg",
-    iconWhite: "/icons/usersW.svg",
+    icon: Users,
     link: "/clientes",
   },
   {
     id: 6,
     name: "Results",
-    icon: "/icons/chart.svg",
-    iconWhite: "/icons/chartW.svg",
+    icon: BarChart3,
     link: "/resultados",
   },
   {
     id: 7,
     name: "Usuarios Panel",
-    icon: "/icons/adminUsers.svg",
-    iconWhite: "/icons/adminUsersW.svg",
+    icon: UserCog,
     link: "/usuarios",
   },
   // {
   //   id: 8,
   //   name: "Banners Fromm",
-  //   icon: "/icons/banners.svg",
-  //   iconWhite: "/icons/bannersW.svg",
+  //   icon: Image,
   //   link: "/banners",
   // },
 ];
@@ -69,50 +72,43 @@ export const navMenuAdminChile: NavMenu[] = [
   {
     id: 1,
     name: "Home",
-    icon: "/icons/home.svg",
-    iconWhite: "/icons/homeW.svg",
+    icon: Home,
     link: "/inicio",
   },
   {
     id: 2,
     name: "Invoices",
-    icon: "/icons/cash.svg",
-    iconWhite: "/icons/cashW.svg",
+    icon: FileText,
     link: "/cotizaciones",
   },
   {
     id: 3,
     name: "Contacts",
-    icon: "/icons/contact.svg",
-    iconWhite: "/icons/contactW.svg",
+    icon: MessageSquare,
     link: "/contactos",
   },
   {
     id: 4,
     name: "Technical Service",
-    icon: "/icons/tool.svg",
-    iconWhite: "/icons/toolW.svg",
+    icon: Wrench,
     link: "/servicios",
   },
   {
     id: 5,
     name: "Clients",
-    icon: "/icons/users.svg",
-    iconWhite: "/icons/usersW.svg",
+    icon: Users,
     link: "/clientes",
   },
   {
     id: 6,
     name: "Results",
-    icon: "/icons/chart.svg",
-    iconWhite: "/icons/chartW.svg",
+    icon: BarChart3,
     link: "/resultados",
   },
   // {
   //   id: 7,
   //   name: "Banners Fromm",
-  //   icon: "/icons/banners.svg",
-  //   iconWhite: "/icons/bannersW.svg",
+  //   icon: Image,
   //   link: "/banners",
   // },
 ];
@@ -121,43 +117,37 @@ export const navMenu: NavMenu[] = [
   {
     id: 1,
     name: "Inicio",
-    icon: "/icons/home.svg",
-    iconWhite: "/icons/homeW.svg",
+    icon: Home,
     link: "/inicio",
   },
   {
     id: 2,
     name: "Cotizaciones",
-    icon: "/icons/cash.svg",
-    iconWhite: "/icons/cashW.svg",
+    icon: FileText,
     link: "/cotizaciones",
   },
   {
     id: 3,
     name: "Contactos",
-    icon: "/icons/contact.svg",
-    iconWhite: "/icons/contactW.svg",
+    icon: MessageSquare,
     link: "/contactos",
   },
   {
     id: 4,
     name: "Servicio Técnico",
-    icon: "/icons/tool.svg",
-    iconWhite: "/icons/toolW.svg",
+    icon: Wrench,
     link: "/servicios",
   },
   {
     id: 5,
     name: "Clientes",
-    icon: "/icons/users.svg",
-    iconWhite: "/icons/usersW.svg",
+    icon: Users,
     link: "/clientes",
   },
   {
     id: 6,
     name: "Resultados",
-    icon: "/icons/chart.svg",
-    iconWhite: "/icons/chartW.svg",
+    icon: BarChart3,
     link: "/resultados",
   },
 ];
@@ -166,15 +156,13 @@ export const navMenuServicioTecnico: NavMenu[] = [
   {
     id: 1,
     name: "Inicio",
-    icon: "/icons/home.svg",
-    iconWhite: "/icons/homeW.svg",
+    icon: Home,
     link: "/inicio",
   },
   {
     id: 4,
     name: "Servicio Técnico",
-    icon: "/icons/tool.svg",
-    iconWhite: "/icons/toolW.svg",
+    icon: Wrench,
     link: "/servicios",
   },
 ];

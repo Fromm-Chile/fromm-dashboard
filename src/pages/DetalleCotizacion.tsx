@@ -11,6 +11,15 @@ import { Button } from "../components/Button";
 import { formatAsUSD } from "../assets/helperFunctions";
 import { useUserStore } from "../store/useUserStore";
 
+const statusStyle: Record<string, string> = {
+  PENDIENTE: "bg-gray-100 text-gray-600",
+  ENVIADA: "bg-emerald-50 text-emerald-700",
+  VENDIDO: "bg-green-50 text-green-700",
+  SEGUIMIENTO: "bg-amber-50 text-amber-700",
+  DERIVADA: "bg-blue-50 text-blue-700",
+  PERDIDA: "bg-red-50 text-red-700",
+};
+
 export const DetalleCotizacion = () => {
   const [estatus, setEstatus] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -127,9 +136,6 @@ export const DetalleCotizacion = () => {
       setError("El monto de la venta es requerido!");
       return;
     }
-
-    // console.log(totalAmount);
-    // return;
     try {
       setModalLoader(true);
       await axios.put(
@@ -202,63 +208,46 @@ export const DetalleCotizacion = () => {
         <Loader />
       ) : (
         <>
-          <div className="mt-5 flex items-center gap-2 text-lg">
-            <img src="/icons/left-arrow.svg" width={15} height={15} />
-            <button
-              className="cursor-pointer hover:text-red-600"
-              onClick={() => navigate(-1)}
-            >
-              Go back
-            </button>
-          </div>
-          <h1 className="text-3xl font-bold text-red-500 pb-4 mt-2 mb-4">
+          <button
+            className="flex items-center gap-2 text-sm text-slate-500 hover:text-slate-700 mt-4 mb-4 cursor-pointer transition-colors"
+            onClick={() => navigate(-1)}
+          >
+            <img src="/icons/left-arrow.svg" width={14} height={14} />
+            Go back
+          </button>
+          <h1 className="text-xl font-semibold text-slate-800 mb-5">
             Quote Details
           </h1>
-          <div className="w-full max-w-[1150px] mx-auto bg-white shadow-lg rounded-lg p-6">
+          <div className="w-full max-w-[1150px] mx-auto bg-white border border-gray-200 rounded-xl p-6">
             <div className="mb-6">
-              <h2 className="text-xl font-semibold text-gray-700 mb-2">
+              <h2 className="text-sm font-semibold text-slate-700 mb-3">
                 General Information
               </h2>
-              <div className="bg-gray-100 p-4 rounded-lg flex justify-between items-center">
-                <div className="flex flex-col pr-10">
-                  <p className="text-gray-700">
-                    <strong>Quote #{cotizacion.id}</strong>
+              <div className="bg-gray-50 border border-gray-100 p-5 rounded-lg flex justify-between items-start">
+                <div className="flex flex-col gap-1.5">
+                  <p className="text-sm text-slate-600">
+                    <span className="font-medium">Quote #{cotizacion.id}</span>
                   </p>
-                  <p className="text-gray-700">
-                    <strong>Creation date:</strong>{" "}
+                  <p className="text-sm text-slate-600">
+                    <span className="font-medium">Creation date:</span>{" "}
                     {cotizacion.createdAt
-                      ? new Date(cotizacion.createdAt).toLocaleDateString(
-                          "en-US"
-                        )
+                      ? new Date(cotizacion.createdAt).toLocaleDateString("en-US")
                       : "Not available"}
                   </p>
-                  <p
-                    className={`p-2 rounded-lg text-center w-fit text-white mt-2 ${
-                      cotizacion.statusR.name === "PENDIENTE"
-                        ? "bg-gray-400 "
-                        : cotizacion.statusR.name === "ENVIADA"
-                        ? "bg-green-400"
-                        : cotizacion.statusR.name === "VENDIDO"
-                        ? "bg-green-500"
-                        : cotizacion.statusR.name === "SEGUIMIENTO"
-                        ? "bg-yellow-500"
-                        : cotizacion.statusR.name === "DERIVADA"
-                        ? "bg-blue-600"
-                        : cotizacion.statusR.name === "PERDIDA"
-                        ? "bg-red-700"
-                        : ""
+                  <span
+                    className={`inline-block w-fit px-2.5 py-1 rounded-full text-xs font-medium mt-1 ${
+                      statusStyle[cotizacion.statusR.name] || ""
                     }`}
                   >
-                    <strong>{cotizacion.statusR.name}</strong>
-                  </p>
+                    {cotizacion.statusR.name}
+                  </span>
                   {cotizacion.statusR.name === "VENDIDO" && (
-                    <p className="text-gray-700 text-2xl">
-                      <strong>Net sale amount:</strong> USD{" "}
-                      {formatAsUSD(cotizacion.totalAmount)}
+                    <p className="text-lg text-slate-800 font-semibold mt-2">
+                      Net sale: USD {formatAsUSD(cotizacion.totalAmount)}
                     </p>
                   )}
                 </div>
-                <div>
+                <div className="flex flex-col gap-2">
                   {user.roleId === 4 || user.roleId === 5 ? null : (
                     <SelectTable
                       selectOptions={
@@ -284,16 +273,18 @@ export const DetalleCotizacion = () => {
                   )}
                   {cotizacion.statusR.name === "PENDIENTE" ||
                   cotizacion.statusR.name === "DERIVADA" ? null : (
-                    <div className="mt-2 flex gap-2 justify-center text-green-500 font-bold border border-gray-200 bg-white rounded-lg p-2 hover:bg-gray-100 hover:text-green-600">
-                      <a target="_blank" href={cotizacion.invoiceURL}>
-                        VIEW QUOTE
-                      </a>
-                      <img src="/icons/clip.svg" width={20} height={20} />
-                    </div>
+                    <a
+                      target="_blank"
+                      href={cotizacion.invoiceURL}
+                      className="flex items-center gap-2 justify-center text-sm font-medium text-emerald-600 border border-gray-200 bg-white rounded-lg px-3 py-2 hover:bg-gray-50 transition-colors"
+                    >
+                      View Quote
+                      <img src="/icons/clip.svg" width={16} height={16} />
+                    </a>
                   )}
                   {cotizacion.statusR.name === "SEGUIMIENTO" && (
                     <Button
-                      className="w-fit h-[40px] flex items-center justify-center mt-2"
+                      className="text-sm"
                       onClick={() => handleState("agregarSeguimiento", true)}
                       link=""
                       whiteButton
@@ -305,63 +296,61 @@ export const DetalleCotizacion = () => {
               </div>
             </div>
             <div className="mb-6">
-              <h2 className="text-xl font-semibold text-gray-700 mb-2">
+              <h2 className="text-sm font-semibold text-slate-700 mb-3">
                 User Information
               </h2>
-              <div className="bg-gray-100 p-4 rounded-lg ">
-                <div className="flex gap-20 mb-5">
-                  <div>
-                    <p className="text-gray-700">
-                      <strong>Name:</strong>{" "}
+              <div className="bg-gray-50 border border-gray-100 p-5 rounded-lg">
+                <div className="grid grid-cols-2 gap-4 mb-4">
+                  <div className="space-y-1.5">
+                    <p className="text-sm text-slate-600">
+                      <span className="font-medium">Name:</span>{" "}
                       {cotizacion.user?.name || "Not available"}
                     </p>
-                    <p className="text-gray-700">
-                      <strong>Email:</strong>{" "}
+                    <p className="text-sm text-slate-600">
+                      <span className="font-medium">Email:</span>{" "}
                       {cotizacion.user?.email || "Not available"}
                     </p>
                   </div>
-                  <div>
-                    <p className="text-gray-700">
-                      <strong>Phone:</strong>{" "}
+                  <div className="space-y-1.5">
+                    <p className="text-sm text-slate-600">
+                      <span className="font-medium">Phone:</span>{" "}
                       {cotizacion.user?.phone || "Not registered"}
                     </p>
-                    <p className="text-gray-700">
-                      <strong>Company:</strong>{" "}
+                    <p className="text-sm text-slate-600">
+                      <span className="font-medium">Company:</span>{" "}
                       {cotizacion.user?.company || "Not registered"}
                     </p>
                   </div>
                 </div>
-                <div>
-                  <p className="text-gray-700">
-                    <strong>Message:</strong>{" "}
-                    {cotizacion?.message || "No message."}
-                  </p>
-                </div>
+                <p className="text-sm text-slate-600">
+                  <span className="font-medium">Message:</span>{" "}
+                  {cotizacion?.message || "No message."}
+                </p>
               </div>
             </div>
             {cotizacion.invoiceDetails?.length > 0 && (
-              <div>
-                <h2 className="text-xl font-semibold text-gray-700 mb-2">
+              <div className="mb-6">
+                <h2 className="text-sm font-semibold text-slate-700 mb-3">
                   Request Details
                 </h2>
                 <div className="overflow-x-auto">
-                  <table className="min-w-full bg-white border border-gray-200 rounded-lg">
-                    <thead className="bg-gray-200 text-gray-700">
-                      <tr>
-                        <th className="px-4 py-2 text-left">Code</th>
-                        <th className="px-4 py-2 text-left">Product</th>
-                        <th className="px-4 py-2 text-left">Quantity</th>
+                  <table className="min-w-full">
+                    <thead>
+                      <tr className="border-b-2 border-gray-200">
+                        <th className="px-4 py-2.5 text-left text-xs font-semibold text-slate-500 uppercase">Code</th>
+                        <th className="px-4 py-2.5 text-left text-xs font-semibold text-slate-500 uppercase">Product</th>
+                        <th className="px-4 py-2.5 text-left text-xs font-semibold text-slate-500 uppercase">Quantity</th>
                       </tr>
                     </thead>
                     <tbody>
                       {cotizacion.invoiceDetails?.map((detail: any) => (
                         <tr
                           key={detail.id}
-                          className="border-t border-gray-200"
+                          className="border-b border-gray-100"
                         >
-                          <td className="px-4 py-2">{detail.id}</td>
-                          <td className="px-4 py-2">{detail.name}</td>
-                          <td className="px-4 py-2">{detail.quantity}</td>
+                          <td className="px-4 py-2.5 text-sm text-slate-600">{detail.id}</td>
+                          <td className="px-4 py-2.5 text-sm text-slate-600">{detail.name}</td>
+                          <td className="px-4 py-2.5 text-sm text-slate-600">{detail.quantity}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -370,30 +359,30 @@ export const DetalleCotizacion = () => {
               </div>
             )}
             <div className="mb-6">
-              <h2 className="text-xl font-semibold text-gray-700 mb-2 mt-5">
+              <h2 className="text-sm font-semibold text-slate-700 mb-3">
                 Request History
               </h2>
               <div className="overflow-x-auto">
-                <table className="min-w-full bg-white border border-gray-200 rounded-lg">
-                  <thead className="bg-gray-200 text-gray-700">
-                    <tr>
-                      <th className="px-4 py-2 text-left">Status</th>
-                      <th className="px-4 py-2 text-left">Comment</th>
-                      <th className="px-4 py-2 text-left">Performed by</th>
-                      <th className="px-4 py-2 text-left">Date</th>
+                <table className="min-w-full">
+                  <thead>
+                    <tr className="border-b-2 border-gray-200">
+                      <th className="px-4 py-2.5 text-left text-xs font-semibold text-slate-500 uppercase">Status</th>
+                      <th className="px-4 py-2.5 text-left text-xs font-semibold text-slate-500 uppercase">Comment</th>
+                      <th className="px-4 py-2.5 text-left text-xs font-semibold text-slate-500 uppercase">Performed by</th>
+                      <th className="px-4 py-2.5 text-left text-xs font-semibold text-slate-500 uppercase">Date</th>
                     </tr>
                   </thead>
                   <tbody>
                     {cotizacion?.invoiceEvents.map((event: any) => (
-                      <tr key={event.id} className="border-t border-gray-200">
-                        <td className="px-4 py-2">{event.status}</td>
-                        <td className="px-4 py-2">
+                      <tr key={event.id} className="border-b border-gray-100">
+                        <td className="px-4 py-2.5 text-sm text-slate-600">{event.status}</td>
+                        <td className="px-4 py-2.5 text-sm text-slate-600">
                           {event.comment || "No comment"}
                         </td>
-                        <td className="px-4 py-2">
+                        <td className="px-4 py-2.5 text-sm text-slate-600">
                           {event.adminUser?.name || "Client"}
                         </td>
-                        <td className="px-4 py-2">
+                        <td className="px-4 py-2.5 text-sm text-slate-600">
                           {event.createdAt
                             ? new Date(event.createdAt).toLocaleDateString(
                                 "en-US",
@@ -429,13 +418,13 @@ export const DetalleCotizacion = () => {
           titleComment="Comment (optional)"
         >
           {file ? (
-            <div className="h-48 rounded-lg border-2 border-gray-300 bg-gray-50 flex flex-col justify-center px-3 mt-3 items-center shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
-              <p className="text-gray-700 mb-2">
+            <div className="h-40 rounded-lg border border-gray-200 bg-gray-50 flex flex-col justify-center px-3 mt-3 items-center">
+              <p className="text-sm text-slate-600 mb-2">
                 <strong>Selected file:</strong>
               </p>
-              <p>{file.name}</p>
+              <p className="text-sm text-slate-500">{file.name}</p>
               <button
-                className="bg-red-500 text-white rounded-lg px-4 py-2 mt-4 cursor-pointer hover:bg-red-600"
+                className="bg-slate-900 text-white rounded-lg px-3 py-1.5 mt-3 cursor-pointer hover:bg-slate-800 text-sm transition-colors"
                 onClick={() => setFile(null)}
               >
                 Change file
@@ -446,17 +435,18 @@ export const DetalleCotizacion = () => {
               <div className="max-w-md mx-auto rounded-lg overflow-hidden md:max-w-xl">
                 <div className="md:flex">
                   <div className="w-full p-3">
-                    <div className="relative h-48 rounded-lg border-2 border-gray-300 bg-gray-50 flex justify-center items-center shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
+                    <div className="relative h-40 rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 flex justify-center items-center hover:border-gray-400 transition-colors">
                       <div className="absolute flex flex-col items-center">
                         <img
                           alt="File Icon"
-                          className="mb-3"
+                          className="mb-2 opacity-50"
                           src="https://img.icons8.com/dusk/64/000000/file.png"
+                          width={40}
                         />
-                        <span className="block text-gray-500 font-semibold">
+                        <span className="block text-slate-500 text-sm font-medium">
                           Drag &amp; drop your quote here
                         </span>
-                        <span className="block text-gray-400 font-normal mt-1">
+                        <span className="block text-slate-400 text-xs mt-1">
                           or click to upload
                         </span>
                       </div>
@@ -483,7 +473,7 @@ export const DetalleCotizacion = () => {
                 </div>
               </div>
               {error && (
-                <p className="text-red-400 font-bold text-base">{error}</p>
+                <p className="text-red-500 text-xs mt-1">{error}</p>
               )}
             </>
           )}
@@ -503,16 +493,10 @@ export const DetalleCotizacion = () => {
           onSubmit={handleStatusDerivado}
           titleComment="Comment (optional)"
         >
-          <div className="w-[80%] mx-auto mt-5">
-            <p className="text-lg">
-              ☑️ Forward to <strong>Sales Management</strong>
+          <div className="w-[80%] mx-auto mt-4">
+            <p className="text-sm text-slate-600">
+              Forward to <strong>Sales Management</strong>
             </p>
-            {/* <SelectTable
-              label="Select area"
-              selectOptions={[{ value: "ventas", texto: "Sales Management" }]}
-              onChange={(e) => console.log(e.target.value)}
-              value=""
-            /> */}
           </div>
         </ModalConfirmacion>
       )}
@@ -560,13 +544,13 @@ export const DetalleCotizacion = () => {
           onSubmit={handleStatusVenta}
           titleComment="Comment (optional)"
         >
-          <div className="flex flex-col items-center justify-center mt-5 w-[80%]">
-            <label htmlFor="" className="self-start mb-1">
+          <div className="flex flex-col mt-4 w-full">
+            <label className="text-xs font-medium text-slate-500 mb-1.5">
               Enter the net sale amount in <strong>US dollars (USD)</strong>.
             </label>
             <input
               type="number"
-              className="border border-gray-300 p-2 w-[100%] rounded-md focus-visible:outline-none focus-visible:border-red-500"
+              className="border border-gray-200 px-3 py-2 w-full rounded-lg text-sm focus-visible:outline-none focus-visible:border-slate-400 transition-colors"
               onChange={(e) => {
                 setTotalAmount(Number(e.target.value));
               }}

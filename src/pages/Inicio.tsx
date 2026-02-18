@@ -92,71 +92,69 @@ export const Inicio = () => {
   });
 
   const handleFilter = () => {
-    setStartDate(inputStartDate); // Update the query parameters
+    setStartDate(inputStartDate);
     setEndDate(inputEndDate);
-    refetchCount(); // Trigger the "ventas-fecha" query
-    refetchData(); // Trigger the "montos-fecha" query
+    refetchCount();
+    refetchData();
   };
 
   return (
-    <>
-      <div>
-        <h1 className="text-4xl text-gray-500 text-center font-bold my-10">
-          Quotes Summary
-        </h1>
-        <div className="flex gap-5 items-center justify-center border border-red-400 pt-2 rounded-2xl mb-5 bg-blue-100">
-          <p className="text-xl text-gray-600">Selected date range</p>
-          <InputFecha
-            label="From"
-            onChange={(e: Date[]) => {
-              setInputStartDate(e[0]);
-            }}
-            value={inputStartDate || new Date(new Date().setDate(1))}
-            obligatorio
-          />
-          <InputFecha
-            label="To"
-            onChange={(e) => {
-              setInputEndDate(e[0]);
-            }}
-            value={inputEndDate || new Date()}
-            obligatorio
-          />
-          <div>
-            <Button
-              link=""
-              className="w-[150px] text-center"
-              onClick={handleFilter}
-            >
-              Filter
-            </Button>
-          </div>
-        </div>
-        <div className="relative">
-          {isLoading && <Loader />}
-          <Summary
-            total={cotizacionesTotales}
-            enviada={montoTotal}
-            pendiente={cotizacionesVendidas}
-            tituloEnviada="Total Amount USD"
-            tituloPendiente="Sold Quotes"
-          />
-          {filteredInvoices.length > 0 ? (
-            <div className="flex gap-4 pb-10">
-              <div className="bg-white p-1 rounded-2xl w-[50%]">
-                <Line chartData={filteredInvoices} />
-              </div>
-              <div className="bg-white p-1 rounded-2xl w-[50%]">
-                <Barras chartData={filteredInvoices} />
-              </div>
-            </div>
-          ) : (
-            <div className="flex justify-center items-center h-[300px]">
-              <p className="text-gray-500 text-xl">No data to display</p>
-            </div>
-          )}
+    <div className="py-4">
+      <h1 className="text-xl font-semibold text-slate-800 mb-6">
+        Quotes Summary
+      </h1>
+      <div className="flex gap-4 items-end flex-wrap bg-white border border-gray-200 rounded-xl p-5 mb-6">
+        <p className="text-sm text-slate-500 self-center">Date range</p>
+        <InputFecha
+          label="From"
+          onChange={(e: Date[]) => {
+            setInputStartDate(e[0]);
+          }}
+          value={inputStartDate || new Date(new Date().setDate(1))}
+          obligatorio
+        />
+        <InputFecha
+          label="To"
+          onChange={(e) => {
+            setInputEndDate(e[0]);
+          }}
+          value={inputEndDate || new Date()}
+          obligatorio
+        />
+        <div className="mb-4">
+          <Button
+            link=""
+            className="text-center"
+            onClick={handleFilter}
+          >
+            Filter
+          </Button>
         </div>
       </div>
-    </>
+      <div className="relative">
+        {isLoading && <Loader />}
+        <Summary
+          total={cotizacionesTotales}
+          enviada={montoTotal}
+          pendiente={cotizacionesVendidas}
+          tituloEnviada="Total Amount USD"
+          tituloPendiente="Sold Quotes"
+        />
+        {filteredInvoices.length > 0 ? (
+          <div className="grid grid-cols-2 gap-4 pb-8">
+            <div className="bg-white border border-gray-200 p-4 rounded-xl">
+              <Line chartData={filteredInvoices} />
+            </div>
+            <div className="bg-white border border-gray-200 p-4 rounded-xl">
+              <Barras chartData={filteredInvoices} />
+            </div>
+          </div>
+        ) : (
+          <div className="flex justify-center items-center h-[300px]">
+            <p className="text-slate-400 text-sm">No data to display</p>
+          </div>
+        )}
+      </div>
+    </div>
   );
 };

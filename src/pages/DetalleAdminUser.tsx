@@ -115,49 +115,43 @@ export const DetalleAdminUser = () => {
         <Loader />
       ) : (
         <>
-          <div className="mt-5 mb-5 flex items-center gap-2 text-lg pb-2">
-            <img src="/icons/left-arrow.svg" width={15} height={15} />
-            <button
-              className="cursor-pointer hover:text-red-600"
-              onClick={() => navigate("/usuarios")}
-            >
-              Volver
-            </button>
-          </div>
-          <div className="max-w-[1150px] mx-auto bg-white shadow-lg rounded-lg p-6">
-            <h1 className="text-3xl font-bold text-red-500 pb-4 mt-2 mb-4">
+          <button
+            className="flex items-center gap-2 text-sm text-slate-500 hover:text-slate-700 mt-4 mb-4 cursor-pointer transition-colors"
+            onClick={() => navigate("/usuarios")}
+          >
+            <img src="/icons/left-arrow.svg" width={14} height={14} />
+            Volver
+          </button>
+          <div className="max-w-[1150px] mx-auto bg-white border border-gray-200 rounded-xl p-6">
+            <h1 className="text-xl font-semibold text-slate-800 mb-5">
               Usuario Administrativo
             </h1>
             <div className="mb-6">
-              <h2 className="text-xl font-semibold text-gray-700 mb-2">
+              <h2 className="text-sm font-semibold text-slate-700 mb-3">
                 Información del Usuario
               </h2>
-              <div className="bg-gray-100 p-4 rounded-lg flex justify-between">
-                <div className="flex gap-20 mb-5">
-                  <div>
-                    <p className="text-gray-700">
-                      <strong>Nombre:</strong> {filterUser?.name}
-                    </p>
-                    <p className="text-gray-700">
-                      <strong>Email:</strong> {filterUser?.email}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-gray-700">
-                      <strong>Role:</strong> {filterUser?.role?.name}
-                    </p>
-                    <p className="text-gray-700">
-                      <strong>Ultima modificación:</strong>{" "}
-                      {new Date(filterUser?.updatedAt).toLocaleDateString(
-                        undefined,
-                        {
-                          year: "numeric",
-                          month: "2-digit",
-                          day: "2-digit",
-                        }
-                      )}
-                    </p>
-                  </div>
+              <div className="bg-gray-50 border border-gray-100 p-5 rounded-lg flex justify-between items-start">
+                <div className="grid grid-cols-2 gap-x-12 gap-y-1.5">
+                  <p className="text-sm text-slate-600">
+                    <span className="font-medium">Nombre:</span> {filterUser?.name}
+                  </p>
+                  <p className="text-sm text-slate-600">
+                    <span className="font-medium">Role:</span> {filterUser?.role?.name}
+                  </p>
+                  <p className="text-sm text-slate-600">
+                    <span className="font-medium">Email:</span> {filterUser?.email}
+                  </p>
+                  <p className="text-sm text-slate-600">
+                    <span className="font-medium">Ultima modificación:</span>{" "}
+                    {new Date(filterUser?.updatedAt).toLocaleDateString(
+                      undefined,
+                      {
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                      }
+                    )}
+                  </p>
                 </div>
                 <div className="flex gap-2">
                   <Button link="" onClick={() => handleState("editar", true)}>
@@ -167,6 +161,7 @@ export const DetalleAdminUser = () => {
                     <Button
                       link=""
                       onClick={() => handleState("inhabilitar", true)}
+                      whiteButton
                     >
                       Inhabilitar
                     </Button>
@@ -197,27 +192,27 @@ export const DetalleAdminUser = () => {
           onSubmit={handleSubmit(updateAdminUser)}
           hasComment={false}
         >
-          <div className="flex flex-col w-[130%] justify-center items-center gap-2 mt-5">
+          <div className="flex flex-col w-full justify-center items-center gap-1 mt-4">
             <InputController
               control={control}
               name="name"
               placeholder="Nombre*"
               error={errors.name?.message}
-              className="w-[50%]"
+              className="w-[80%]"
             />
             <InputController
               control={control}
               name="email"
               placeholder="Correo*"
               error={errors.email?.message}
-              className="w-[50%]"
+              className="w-[80%]"
             />
             <InputController
               control={control}
               name="password"
               placeholder="Contraseña*"
               error={errors.password?.message}
-              className="w-[50%]"
+              className="w-[80%]"
             />
             <Controller
               control={control}
@@ -225,8 +220,8 @@ export const DetalleAdminUser = () => {
               render={({ field }) => (
                 <select
                   {...field}
-                  className={`w-[50%] mb-5 border border-gray-300 p-2 rounded-lg focus-visible:border-red-500 focus-visible:outline-none ${
-                    errors.role ? "border-red-500" : "border-gray-300"
+                  className={`w-[80%] mb-4 border px-3 py-2 rounded-lg text-sm focus-visible:border-slate-400 focus-visible:outline-none transition-colors ${
+                    errors.role ? "border-red-300" : "border-gray-200"
                   }`}
                 >
                   <option value="" className="text-gray-300">
@@ -255,7 +250,7 @@ export const DetalleAdminUser = () => {
           titleComment="Comentario (opcional)"
         >
           <div>
-            <p className="text-gray-700 text-center">
+            <p className="text-sm text-slate-600 text-center">
               Estas seguro que quires inhabilitar este usuario?
             </p>
           </div>
@@ -272,7 +267,7 @@ export const DetalleAdminUser = () => {
           titleComment="Comentario (opcional)"
         >
           <div>
-            <p className="text-gray-700 text-center">
+            <p className="text-sm text-slate-600 text-center">
               Estas seguro que quires habilitar este usuario?
             </p>
           </div>

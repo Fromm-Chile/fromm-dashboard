@@ -9,6 +9,11 @@ import { ModalConfirmacion } from "../components/ModalConfirmacion";
 import { Button } from "../components/Button";
 import { useUserStore } from "../store/useUserStore";
 
+const statusStyle: Record<string, string> = {
+  PENDIENTE: "bg-gray-100 text-gray-600",
+  FINALIZADO: "bg-emerald-50 text-emerald-700",
+};
+
 export const DetalleServicio = () => {
   const [modalLoader, setModalLoader] = useState(false);
   const [initialState, handleState] = useModalStates({
@@ -62,62 +67,52 @@ export const DetalleServicio = () => {
         <Loader />
       ) : (
         <>
-          <div className="mt-5 flex items-center gap-2 text-lg pb2">
-            <img src="/icons/left-arrow.svg" width={15} height={15} />
-            <button
-              className="cursor-pointer hover:text-red-600"
-              onClick={() => navigate(-1)}
-            >
-              Go back
-            </button>
-          </div>
-          <h1 className="text-3xl font-bold text-red-500 pb-4 mt-2 mb-4">
+          <button
+            className="flex items-center gap-2 text-sm text-slate-500 hover:text-slate-700 mt-4 mb-4 cursor-pointer transition-colors"
+            onClick={() => navigate(-1)}
+          >
+            <img src="/icons/left-arrow.svg" width={14} height={14} />
+            Go back
+          </button>
+          <h1 className="text-xl font-semibold text-slate-800 mb-5">
             Technical Service Details
           </h1>
-          <div className="w-full max-w-[1150px] mx-auto bg-white shadow-lg rounded-lg p-6">
+          <div className="w-full max-w-[1150px] mx-auto bg-white border border-gray-200 rounded-xl p-6">
             <div className="mb-6">
-              <h2 className="text-xl font-semibold text-gray-700 mb-2">
+              <h2 className="text-sm font-semibold text-slate-700 mb-3">
                 Contact Information
               </h2>
-              <div className="flex justify-between items-center mb-4 bg-gray-100 p-4 rounded-lg ">
-                <div className="flex gap-5">
-                  <div>
-                    <p className="text-gray-700">
-                      <strong>Contact:</strong> #{contacto.id}
-                    </p>
-                    <p className="text-gray-700">
-                      <strong>Name:</strong> {contacto.name || "Not available"}
-                    </p>
-                    <p className="text-gray-700">
-                      <strong>Email:</strong>{" "}
-                      {contacto.email || "Not available"}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-gray-700">
-                      <strong>Phone:</strong>{" "}
-                      {contacto.phone || "Not registered"}
-                    </p>
-                    <p className="text-gray-700">
-                      <strong>Company:</strong>{" "}
-                      {contacto.company || "Not registered"}
-                    </p>
-                    <p className="text-gray-700">
-                      <strong>Equipment:</strong>{" "}
-                      {contacto.equipment || "Not registered"}
-                    </p>
-                    <p
-                      className={`p-2 rounded-lg text-center w-fit text-white mt-2 ${
-                        contacto.status.name === "PENDIENTE"
-                          ? "bg-gray-400 "
-                          : contacto.status.name === "FINALIZADO"
-                          ? "bg-green-400"
-                          : ""
-                      }`}
-                    >
-                      <strong>{contacto.status.name}</strong>
-                    </p>
-                  </div>
+              <div className="flex justify-between items-start bg-gray-50 border border-gray-100 p-5 rounded-lg">
+                <div className="grid grid-cols-2 gap-x-12 gap-y-1.5">
+                  <p className="text-sm text-slate-600">
+                    <span className="font-medium">Contact:</span> #{contacto.id}
+                  </p>
+                  <p className="text-sm text-slate-600">
+                    <span className="font-medium">Phone:</span>{" "}
+                    {contacto.phone || "Not registered"}
+                  </p>
+                  <p className="text-sm text-slate-600">
+                    <span className="font-medium">Name:</span> {contacto.name || "Not available"}
+                  </p>
+                  <p className="text-sm text-slate-600">
+                    <span className="font-medium">Company:</span>{" "}
+                    {contacto.company || "Not registered"}
+                  </p>
+                  <p className="text-sm text-slate-600">
+                    <span className="font-medium">Email:</span>{" "}
+                    {contacto.email || "Not available"}
+                  </p>
+                  <p className="text-sm text-slate-600">
+                    <span className="font-medium">Equipment:</span>{" "}
+                    {contacto.equipment || "Not registered"}
+                  </p>
+                  <span
+                    className={`inline-block w-fit px-2.5 py-1 rounded-full text-xs font-medium mt-1 ${
+                      statusStyle[contacto.status.name] || ""
+                    }`}
+                  >
+                    {contacto.status.name}
+                  </span>
                 </div>
                 <div>
                   {contacto.status.name !== "PENDIENTE" ||
@@ -134,34 +129,34 @@ export const DetalleServicio = () => {
               </div>
             </div>
             <div className="mb-6">
-              <h2 className="text-xl font-semibold text-gray-700 mb-2">
+              <h2 className="text-sm font-semibold text-slate-700 mb-3">
                 Message
               </h2>
-              <div className="bg-gray-100 p-4 rounded-lg">
-                <p className="text-gray-700 whitespace-pre-line">
+              <div className="bg-gray-50 border border-gray-100 p-5 rounded-lg">
+                <p className="text-sm text-slate-600 whitespace-pre-line">
                   {contacto.message || "No message available."}
                 </p>
               </div>
             </div>
             <div>
-              <h2 className="text-xl font-semibold text-gray-700 mb-2">
+              <h2 className="text-sm font-semibold text-slate-700 mb-3">
                 Additional Information
               </h2>
-              <div className="bg-gray-100 p-4 rounded-lg flex gap-10">
+              <div className="bg-gray-50 border border-gray-100 p-5 rounded-lg flex gap-8">
                 {contacto.status === "SERVICE" && (
-                  <p className="text-gray-700">
-                    <strong>Equipment:</strong>{" "}
+                  <p className="text-sm text-slate-600">
+                    <span className="font-medium">Equipment:</span>{" "}
                     {contacto.equipment || "Not specified"}
                   </p>
                 )}
-                <p className="text-gray-700">
-                  <strong>Creation date:</strong>{" "}
+                <p className="text-sm text-slate-600">
+                  <span className="font-medium">Creation date:</span>{" "}
                   {contacto.createdAt
                     ? new Date(contacto.createdAt).toLocaleDateString("en-US")
                     : "Not available"}
                 </p>
-                <p className="text-gray-700">
-                  <strong>Last update:</strong>{" "}
+                <p className="text-sm text-slate-600">
+                  <span className="font-medium">Last update:</span>{" "}
                   {contacto.updatedAt
                     ? new Date(contacto.updatedAt).toLocaleDateString("en-US")
                     : "Not available"}
@@ -184,7 +179,7 @@ export const DetalleServicio = () => {
               titleComment="Comment (optional)"
             >
               <div>
-                <p className="text-gray-700 text-center">
+                <p className="text-sm text-slate-600 text-center">
                   Are you sure you want to complete the service?
                 </p>
               </div>

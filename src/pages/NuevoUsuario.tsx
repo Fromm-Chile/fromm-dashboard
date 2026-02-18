@@ -7,16 +7,7 @@ import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router";
-import { Button } from "../components/Button";
 import { ModalConfirmacion } from "../components/ModalConfirmacion";
-
-// type adminUser = {
-//   id: number;
-//   email: string;
-//   name: string;
-//   company: string;
-//   phone: string;
-// };
 
 const schema = yup.object().shape({
   name: yup.string().required("Nombre es requerido"),
@@ -65,82 +56,78 @@ export const NuevoUsuario = () => {
   return (
     <>
       {isLoading && <Loader />}
-      <div className="m-auto max-w-[1150px] min-h-[600px] bg-white shadow-lg rounded-lg py-6 px-36 my-10">
-        <h1 className="text-center text-2xl my-10 uppercase font-medium text-gray-700">
+      <div className="m-auto max-w-[700px] bg-white border border-gray-200 rounded-xl py-8 px-10 my-8">
+        <h1 className="text-center text-lg font-semibold text-slate-800 mb-6">
           Crear una nuevo usuario Administrativo
         </h1>
-        <p className="mb-10">
+        <p className="text-sm text-slate-500 mb-8">
           Ingresa los datos del nuevo usuario administrativo. Recuerda que el
           <strong> correo electrónico</strong> es el que se usará para iniciar
           sesión en el panel administrativo.
         </p>
-        <div className="md:grid md:grid-cols-1 md:gap-0 my-10 mb-14">
-          <div className="flex w-full gap-5 mb-5">
+        <div className="mb-6">
+          <div className="grid grid-cols-2 gap-4 mb-2">
             <InputController
               control={control}
               name="name"
               placeholder="Nombre*"
               error={errors.name?.message}
-              className="w-[50%]"
             />
             <InputController
               control={control}
               name="email"
               placeholder="Correo*"
               error={errors.email?.message}
-              className="w-[50%]"
             />
           </div>
-          <div className="flex w-full gap-5 mb-5 flex-1/2">
+          <div className="grid grid-cols-2 gap-4 mb-2">
             <InputController
               control={control}
               name="password"
               placeholder="Contraseña*"
               error={errors.password?.message}
-              className="w-[50%]"
             />
             <Controller
               control={control}
               name="role"
               render={({ field }) => (
-                <select
-                  {...field}
-                  className={`w-[50%] mb-5 border border-gray-300 p-2 rounded-lg focus-visible:border-red-500 focus-visible:outline-none ${
-                    errors.role ? "border-red-500" : "border-gray-300"
-                  }`}
-                >
-                  <option value="" className="text-gray-300">
-                    Selecciona el Rol...
-                  </option>
-                  <option value="AdminChile">AdminChile</option>
-                  <option value="AdminPeru">AdminPeru</option>
-                  <option value="UserChile">UserChile</option>
-                  <option value="UserPeru">UserPeru</option>
-                  <option value="ServicioChile">ServicioChile</option>
-                  <option value="ServicioPeru">ServicioPeru</option>
-                </select>
+                <div className="mb-4">
+                  <select
+                    {...field}
+                    className={`w-full border px-3 py-2 rounded-lg text-sm focus-visible:border-slate-400 focus-visible:outline-none transition-colors ${
+                      errors.role ? "border-red-300" : "border-gray-200"
+                    }`}
+                  >
+                    <option value="" className="text-gray-300">
+                      Selecciona el Rol...
+                    </option>
+                    <option value="AdminChile">AdminChile</option>
+                    <option value="AdminPeru">AdminPeru</option>
+                    <option value="UserChile">UserChile</option>
+                    <option value="UserPeru">UserPeru</option>
+                    <option value="ServicioChile">ServicioChile</option>
+                    <option value="ServicioPeru">ServicioPeru</option>
+                  </select>
+                </div>
               )}
             />
           </div>
-          <div className="flex justify-center">
-            <Button
-              className="border border-black rounded-lg p-2 text-textGray font-bold uppercase cursor-pointer"
+          <div className="flex justify-center mt-4">
+            <button
+              className="bg-slate-900 text-white rounded-lg px-6 py-2.5 text-sm font-medium hover:bg-slate-800 cursor-pointer transition-colors"
               onClick={handleSubmit(() => setModal(true))}
-              link=""
             >
-              CREAR USUARIO
-            </Button>
+              Crear Usuario
+            </button>
           </div>
         </div>
-        <div className="mt-10 flex items-center gap-2 text-lg">
-          <img src="/icons/left-arrow.svg" width={15} height={15} />
-          <button
-            className="cursor-pointer hover:text-red-600"
-            onClick={() => navigate("/usuarios")}
-          >
-            Volver
-          </button>
-        </div>
+        <button
+          className="flex items-center gap-2 text-sm text-slate-500 hover:text-slate-700 cursor-pointer transition-colors"
+          onClick={() => navigate("/usuarios")}
+        >
+          <img src="/icons/left-arrow.svg" width={14} height={14} />
+          Volver
+        </button>
       </div>
       <ModalConfirmacion
         text="Estás segura de crear una nueva cotización?"

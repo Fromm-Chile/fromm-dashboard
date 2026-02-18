@@ -4,9 +4,10 @@
 @custom-variant dark (&:is(.dark *));
 
 body {
-    background-color: #ecebeb;
-    font-family: 'Poppins', sans-serif;
-    font-size: 16px;
+    background-color: #fafafa;
+    font-family: 'Inter', 'Poppins', sans-serif;
+    font-size: 15px;
+    color: #1e293b;
 }
 
 /* For WebKit browsers (Chrome, Safari) */

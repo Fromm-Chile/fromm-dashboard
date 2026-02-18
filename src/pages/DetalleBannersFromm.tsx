@@ -129,77 +129,69 @@ export const DetalleBannersFromm = () => {
         <Loader />
       ) : (
         <>
-          <div className="mt-5 mb-5 flex items-center gap-2 text-lg pb-2">
-            <img src="/icons/left-arrow.svg" width={15} height={15} />
-            <button
-              className="cursor-pointer hover:text-red-600"
-              onClick={() => navigate("/banners")}
-            >
-              Volver
-            </button>
-          </div>
-          <div className="max-w-[1150px] mx-auto bg-white shadow-lg rounded-lg p-6">
-            <h1 className="text-3xl font-bold text-red-500 pb-4 mt-2 mb-4">
+          <button
+            className="flex items-center gap-2 text-sm text-slate-500 hover:text-slate-700 mt-4 mb-4 cursor-pointer transition-colors"
+            onClick={() => navigate("/banners")}
+          >
+            <img src="/icons/left-arrow.svg" width={14} height={14} />
+            Volver
+          </button>
+          <div className="max-w-[1150px] mx-auto bg-white border border-gray-200 rounded-xl p-6">
+            <h1 className="text-xl font-semibold text-slate-800 mb-5">
               Detalles Banner
             </h1>
             <div className="mb-6">
-              <div className="bg-gray-100 p-4 rounded-lg flex justify-center">
-                <div className="flex gap-10 flex-col">
-                  <div className="flex gap-10 justify-around">
-                    <div className="flex flex-col gap-2">
-                      <div className="flex gap-5">
-                        <div>
-                          <p className="text-gray-700">
-                            <strong>Nombre:</strong> {banner?.name}
-                          </p>
-                        </div>
-                        <div>
-                          <p className="text-gray-700">
-                            <strong>Ultima modificación:</strong>{" "}
-                            {new Date(
-                              banner?.updatedAt || ""
-                            ).toLocaleDateString(undefined, {
-                              year: "numeric",
-                              month: "2-digit",
-                              day: "2-digit",
-                            })}
-                          </p>
-                        </div>
-                      </div>
-                      <div>
-                        <p className="text-gray-700">
-                          <strong>Url:</strong> {banner?.url}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex gap-2">
-                      {banner?.isActive ? (
-                        <>
-                          <Button
-                            link=""
-                            onClick={() => handleState("editar", true)}
-                          >
-                            Cambiar posición
-                          </Button>
-                          <Button
-                            link=""
-                            onClick={() => handleState("eliminar", true)}
-                          >
-                            Eliminar
-                          </Button>
-                        </>
-                      ) : (
+              <div className="bg-gray-50 border border-gray-100 p-5 rounded-lg">
+                <div className="flex justify-between items-start mb-6">
+                  <div className="space-y-1.5">
+                    <p className="text-sm text-slate-600">
+                      <span className="font-medium">Nombre:</span> {banner?.name}
+                    </p>
+                    <p className="text-sm text-slate-600">
+                      <span className="font-medium">Ultima modificación:</span>{" "}
+                      {new Date(
+                        banner?.updatedAt || ""
+                      ).toLocaleDateString(undefined, {
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                      })}
+                    </p>
+                    <p className="text-sm text-slate-600">
+                      <span className="font-medium">Url:</span> {banner?.url}
+                    </p>
+                  </div>
+                  <div className="flex gap-2">
+                    {banner?.isActive ? (
+                      <>
                         <Button
                           link=""
-                          onClick={() => handleState("activar", true)}
+                          onClick={() => handleState("editar", true)}
                         >
-                          Habilitar
+                          Cambiar posición
                         </Button>
-                      )}
-                    </div>
+                        <Button
+                          link=""
+                          onClick={() => handleState("eliminar", true)}
+                          whiteButton
+                        >
+                          Eliminar
+                        </Button>
+                      </>
+                    ) : (
+                      <Button
+                        link=""
+                        onClick={() => handleState("activar", true)}
+                      >
+                        Habilitar
+                      </Button>
+                    )}
                   </div>
-                  <img src={banner?.url} height={600} width={900} />
                 </div>
+                <img
+                  src={banner?.url}
+                  className="rounded-lg border border-gray-200 w-full max-w-[900px] mx-auto"
+                />
               </div>
             </div>
           </div>
@@ -218,16 +210,16 @@ export const DetalleBannersFromm = () => {
           onSubmit={changeOrderHandler}
           hasComment={false}
         >
-          <div className="flex items-center justify-between mt-5 w-[40%] mb-5">
-            <label>Nueva posición</label>
+          <div className="flex items-center gap-3 mt-4 w-full mb-3">
+            <label className="text-sm text-slate-600">Nueva posición</label>
             <input
               type="number"
               value={order || ""}
               onChange={(e) => setOrder(Number(e.target.value))}
-              className="border border-gray-300 py-2 pl-5 rounded-md focus-visible:outline-none focus-visible:border-red-500 w-20"
+              className="border border-gray-200 py-2 pl-3 rounded-lg text-sm focus-visible:outline-none focus-visible:border-slate-400 w-20 transition-colors"
             />
           </div>
-          {error && <p className="text-red-400 font-bold text-base">{error}</p>}
+          {error && <p className="text-red-500 text-xs">{error}</p>}
         </ModalConfirmacion>
       )}
       {initialState.eliminar && (

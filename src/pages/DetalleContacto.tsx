@@ -9,6 +9,12 @@ import { useState } from "react";
 import { ModalConfirmacion } from "../components/ModalConfirmacion";
 import { useUserStore } from "../store/useUserStore";
 
+const statusStyle: Record<string, string> = {
+  PENDIENTE: "bg-gray-100 text-gray-600",
+  "COTIZACIÓN": "bg-emerald-50 text-emerald-700",
+  DERIVADA: "bg-blue-50 text-blue-700",
+};
+
 export const DetalleContacto = () => {
   const [estatus, setEstatus] = useState<string | null>(null);
   const [modalLoader, setModalLoader] = useState(false);
@@ -133,60 +139,48 @@ export const DetalleContacto = () => {
         <Loader />
       ) : (
         <>
-          <div className="mt-5 flex items-center gap-2 text-lg pb2">
-            <img src="/icons/left-arrow.svg" width={15} height={15} />
-            <button
-              className="cursor-pointer hover:text-red-600"
-              onClick={() => navigate(-1)}
-            >
-              Go back
-            </button>
-          </div>
-          <h1 className="text-3xl font-bold text-red-500 pb-4 mt-2 mb-4">
+          <button
+            className="flex items-center gap-2 text-sm text-slate-500 hover:text-slate-700 mt-4 mb-4 cursor-pointer transition-colors"
+            onClick={() => navigate(-1)}
+          >
+            <img src="/icons/left-arrow.svg" width={14} height={14} />
+            Go back
+          </button>
+          <h1 className="text-xl font-semibold text-slate-800 mb-5">
             Contact Details
           </h1>
-          <div className="w-full max-w-[1150px] mx-auto bg-white shadow-lg rounded-lg p-6">
+          <div className="w-full max-w-[1150px] mx-auto bg-white border border-gray-200 rounded-xl p-6">
             <div className="mb-6">
-              <h2 className="text-xl font-semibold text-gray-700 mb-2">
+              <h2 className="text-sm font-semibold text-slate-700 mb-3">
                 Contact Information
               </h2>
-              <div className="flex justify-between items-center mb-4 bg-gray-100 p-4 rounded-lg ">
-                <div className="flex gap-5">
-                  <div>
-                    <p className="text-gray-700">
-                      <strong>Contact:</strong> #{contacto.id}
-                    </p>
-                    <p className="text-gray-700">
-                      <strong>Name:</strong> {contacto.name || "Not available"}
-                    </p>
-                    <p className="text-gray-700">
-                      <strong>Email:</strong>{" "}
-                      {contacto.email || "Not available"}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-gray-700">
-                      <strong>Phone:</strong>{" "}
-                      {contacto.phone || "Not registered"}
-                    </p>
-                    <p className="text-gray-700">
-                      <strong>Company:</strong>{" "}
-                      {contacto.company || "Not registered"}
-                    </p>
-                    <p
-                      className={`p-2 rounded-lg text-center w-fit text-white mt-2 ${
-                        contacto.status.name === "PENDIENTE"
-                          ? "bg-gray-400 "
-                          : contacto.status.name === "COTIZACIÓN"
-                          ? "bg-green-400"
-                          : contacto.status.name === "DERIVADA"
-                          ? "bg-blue-600"
-                          : ""
-                      }`}
-                    >
-                      <strong>{contacto.status.name}</strong>
-                    </p>
-                  </div>
+              <div className="flex justify-between items-start bg-gray-50 border border-gray-100 p-5 rounded-lg">
+                <div className="grid grid-cols-2 gap-x-12 gap-y-1.5">
+                  <p className="text-sm text-slate-600">
+                    <span className="font-medium">Contact:</span> #{contacto.id}
+                  </p>
+                  <p className="text-sm text-slate-600">
+                    <span className="font-medium">Phone:</span>{" "}
+                    {contacto.phone || "Not registered"}
+                  </p>
+                  <p className="text-sm text-slate-600">
+                    <span className="font-medium">Name:</span> {contacto.name || "Not available"}
+                  </p>
+                  <p className="text-sm text-slate-600">
+                    <span className="font-medium">Company:</span>{" "}
+                    {contacto.company || "Not registered"}
+                  </p>
+                  <p className="text-sm text-slate-600">
+                    <span className="font-medium">Email:</span>{" "}
+                    {contacto.email || "Not available"}
+                  </p>
+                  <span
+                    className={`inline-block w-fit px-2.5 py-1 rounded-full text-xs font-medium mt-1 ${
+                      statusStyle[contacto.status.name] || ""
+                    }`}
+                  >
+                    {contacto.status.name}
+                  </span>
                 </div>
                 <div>
                   {contacto.status.name !== "PENDIENTE" ||
@@ -196,7 +190,7 @@ export const DetalleContacto = () => {
                       selectOptions={[
                         { value: "cotizado", texto: "QUOTED" },
                         { value: "servicio", texto: "SERVICE" },
-                        { value: "derivada", texto: "REFERRED" }, // changed from "FORWARDED" to "REFERRED"
+                        { value: "derivada", texto: "REFERRED" },
                       ]}
                       label="Contact status"
                       onChange={(e) => {
@@ -211,34 +205,34 @@ export const DetalleContacto = () => {
               </div>
             </div>
             <div className="mb-6">
-              <h2 className="text-xl font-semibold text-gray-700 mb-2">
+              <h2 className="text-sm font-semibold text-slate-700 mb-3">
                 Message
               </h2>
-              <div className="bg-gray-100 p-4 rounded-lg">
-                <p className="text-gray-700 whitespace-pre-line">
+              <div className="bg-gray-50 border border-gray-100 p-5 rounded-lg">
+                <p className="text-sm text-slate-600 whitespace-pre-line">
                   {contacto.message || "No message available."}
                 </p>
               </div>
             </div>
             <div>
-              <h2 className="text-xl font-semibold text-gray-700 mb-2">
+              <h2 className="text-sm font-semibold text-slate-700 mb-3">
                 Additional Information
               </h2>
-              <div className="bg-gray-100 p-4 rounded-lg flex gap-10">
+              <div className="bg-gray-50 border border-gray-100 p-5 rounded-lg flex gap-8">
                 {contacto.status === "SERVICE" && (
-                  <p className="text-gray-700">
-                    <strong>Equipment:</strong>{" "}
+                  <p className="text-sm text-slate-600">
+                    <span className="font-medium">Equipment:</span>{" "}
                     {contacto.equipment || "Not specified"}
                   </p>
                 )}
-                <p className="text-gray-700">
-                  <strong>Creation date:</strong>{" "}
+                <p className="text-sm text-slate-600">
+                  <span className="font-medium">Creation date:</span>{" "}
                   {contacto.createdAt
                     ? new Date(contacto.createdAt).toLocaleDateString("en-US")
                     : "Not available"}
                 </p>
-                <p className="text-gray-700">
-                  <strong>Last update:</strong>{" "}
+                <p className="text-sm text-slate-600">
+                  <span className="font-medium">Last update:</span>{" "}
                   {contacto.updatedAt
                     ? new Date(contacto.updatedAt).toLocaleDateString("en-US")
                     : "Not available"}
@@ -260,7 +254,7 @@ export const DetalleContacto = () => {
               onSubmit={handleStatusDerivado}
               titleComment="Comment (optional)"
             >
-              <div className="w-[80%] mx-auto mt-5 mb-2">
+              <div className="w-[80%] mx-auto mt-4 mb-2">
                 <SelectTable
                   label="Select area"
                   selectOptions={[
@@ -281,7 +275,7 @@ export const DetalleContacto = () => {
                   <input
                     type="text"
                     placeholder="Specify the area"
-                    className="border border-gray-300 p-2 w-full rounded-md focus-visible:outline-none focus-visible:border-red-500 mt-2"
+                    className="border border-gray-200 px-3 py-2 w-full rounded-lg text-sm focus-visible:outline-none focus-visible:border-slate-400 mt-2 transition-colors"
                     onChange={(e) => {
                       department === "Otro" && setOtro(e.target.value);
                     }}
@@ -305,7 +299,7 @@ export const DetalleContacto = () => {
               onSubmit={handleStatusCotizado}
             >
               <div>
-                <p className="text-gray-700 text-center">
+                <p className="text-sm text-slate-600 text-center">
                   Are you sure you want to create a <strong>new quote</strong>{" "}
                   from this message's information?
                 </p>
@@ -327,7 +321,7 @@ export const DetalleContacto = () => {
               titleComment="Comment (optional)"
             >
               <div>
-                <p className="text-gray-700 text-center">
+                <p className="text-sm text-slate-600 text-center">
                   Are you sure you want to move this message to{" "}
                   <strong>technical service</strong>?
                 </p>

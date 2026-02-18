@@ -53,7 +53,7 @@ export const BannersFromm = () => {
       cell: ({ getValue }: { getValue: () => any }) => {
         const date = new Date(getValue());
         return (
-          <div className="">
+          <div>
             {date.toLocaleDateString("es-ES", {
               year: "numeric",
               month: "2-digit",
@@ -75,11 +75,15 @@ export const BannersFromm = () => {
       header: "Activa",
       accessorKey: "isActive",
       cell: ({ getValue }: { getValue: () => any }) => (
-        <div className="">
+        <div>
           {getValue() ? (
-            <span className="text-green-500">Sí</span>
+            <span className="inline-block px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700">
+              Sí
+            </span>
           ) : (
-            <span className="text-red-500">No</span>
+            <span className="inline-block px-2.5 py-1 rounded-full text-xs font-medium bg-red-50 text-red-700">
+              No
+            </span>
           )}
         </div>
       ),
@@ -132,113 +136,107 @@ export const BannersFromm = () => {
   console.log(file);
 
   return (
-    <>
-      <div className="pb-10 pt-10">
-        <div className="w-full h-auto bg-white rounded-3xl shadow-lg p-8 mb-12 text-gray-600">
-          <div className="mb-6 flex justify-between items-center">
-            <h1 className="text-2xl font-medium text-center">
-              Banners promocionales de FROMM
-            </h1>
-            <button
-              className="cursor-pointer hover:bg-red-400 bg-red-500 rounded-lg text-white p-4 hover:shadow-lg transition-all"
-              onClick={() => {
-                setModalUpload(true);
-                setFile(null);
-                setError(null);
-              }}
-            >
-              SUBIR BANNER
-            </button>
-          </div>
-
-          <Table
-            datosTabla={banners}
-            columns={columns}
-            detailsRoute="banners"
-            isLoading={isLoading}
-          />
+    <div className="pb-8 pt-6">
+      <div className="w-full bg-white border border-gray-200 rounded-xl p-6 mb-8">
+        <div className="mb-5 flex justify-between items-center">
+          <h1 className="text-lg font-semibold text-slate-800">
+            Banners promocionales de FROMM
+          </h1>
+          <button
+            className="cursor-pointer bg-slate-900 hover:bg-slate-800 rounded-lg text-white text-sm font-medium px-4 py-2.5 transition-colors"
+            onClick={() => {
+              setModalUpload(true);
+              setFile(null);
+              setError(null);
+            }}
+          >
+            Subir Banner
+          </button>
         </div>
+
+        <Table
+          datosTabla={banners}
+          columns={columns}
+          detailsRoute="banners"
+          isLoading={isLoading}
+        />
       </div>
       {modalUpload && (
         <ModalConfirmacion
           isLoading={modalLoader}
           isOpen={modalUpload}
           onCancel={() => setModalUpload(false)}
-          text={<p>Agregar imágen jpg con un tamaño máximo de 4 MB.</p>}
+          text={<p className="text-sm">Agregar imágen jpg con un tamaño máximo de 4 MB.</p>}
           onSubmit={uploadImageHandler}
           hasComment={false}
         >
           {file ? (
-            <div className="h-48 rounded-lg border-2 border-gray-300 bg-gray-50 flex flex-col justify-center px-3 mt-3 items-center shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
-              <p className="text-gray-700 mb-2">
+            <div className="h-40 rounded-lg border border-gray-200 bg-gray-50 flex flex-col justify-center px-3 mt-3 items-center">
+              <p className="text-sm text-slate-600 mb-2">
                 <strong>Archivo seleccionado:</strong>
               </p>
-              <p>{file.name}</p>
+              <p className="text-sm text-slate-500">{file.name}</p>
               <button
-                className="bg-red-500 text-white rounded-lg px-4 py-2 mt-4 cursor-pointer hover:bg-red-600"
+                className="bg-slate-900 text-white rounded-lg px-3 py-1.5 mt-3 cursor-pointer hover:bg-slate-800 text-sm transition-colors"
                 onClick={() => setFile(null)}
               >
                 Cambiar archivo
               </button>
             </div>
           ) : (
-            <>
-              <div className="max-w-md mx-auto rounded-lg overflow-hidden md:max-w-xl">
-                <div className="md:flex">
-                  <div className="w-full p-3">
-                    <div className="relative h-48 rounded-lg border-2 border-gray-300 bg-gray-50 flex justify-center items-center shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
-                      <div className="absolute flex flex-col items-center">
-                        <img
-                          alt="File Icon"
-                          className="mb-3"
-                          src="https://img.icons8.com/dusk/64/000000/file.png"
-                        />
-                        <span className="block text-gray-500 font-semibold">
-                          Arrastra &amp; suelta tu imágen aquí
-                        </span>
-                        <span className="block text-gray-400 font-normal mt-1">
-                          o haz click para subir
-                        </span>
-                      </div>
-                      <input
-                        name=""
-                        className="h-full w-full opacity-0 cursor-pointer"
-                        type="file"
-                        accept=".jpg,.jpeg"
-                        onChange={(e) => {
-                          const file = e.target.files?.[0];
-                          const maxSizeInBytes = 4 * 1024 * 1024;
-                          if (file) {
-                            if (file.size > maxSizeInBytes) {
-                              alert("Imágen debe exceder los 4 MB!");
-                              e.target.value = "";
-                            } else {
-                              setFile(file);
-                            }
-                          }
-                        }}
+            <div className="max-w-md mx-auto rounded-lg overflow-hidden md:max-w-xl">
+              <div className="md:flex">
+                <div className="w-full p-3">
+                  <div className="relative h-40 rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 flex justify-center items-center hover:border-gray-400 transition-colors">
+                    <div className="absolute flex flex-col items-center">
+                      <img
+                        alt="File Icon"
+                        className="mb-2 opacity-50"
+                        src="https://img.icons8.com/dusk/64/000000/file.png"
+                        width={40}
                       />
+                      <span className="block text-slate-500 text-sm font-medium">
+                        Arrastra &amp; suelta tu imágen aquí
+                      </span>
+                      <span className="block text-slate-400 text-xs mt-1">
+                        o haz click para subir
+                      </span>
                     </div>
+                    <input
+                      name=""
+                      className="h-full w-full opacity-0 cursor-pointer"
+                      type="file"
+                      accept=".jpg,.jpeg"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        const maxSizeInBytes = 4 * 1024 * 1024;
+                        if (file) {
+                          if (file.size > maxSizeInBytes) {
+                            alert("Imágen debe exceder los 4 MB!");
+                            e.target.value = "";
+                          } else {
+                            setFile(file);
+                          }
+                        }
+                      }}
+                    />
                   </div>
                 </div>
               </div>
-              {/* {error && (
-                <p className="text-red-400 font-bold text-base">{error}</p>
-              )} */}
-            </>
+            </div>
           )}
-          <div className="flex items-center justify-between mt-5 w-[50%] mb-5">
-            <label>Posición del banner</label>
+          <div className="flex items-center gap-3 mt-4 w-full mb-3">
+            <label className="text-sm text-slate-600">Posición del banner</label>
             <input
               type="number"
               value={order || ""}
               onChange={(e) => setOrder(Number(e.target.value))}
-              className="border border-gray-300 py-2 pl-5 rounded-md focus-visible:outline-none focus-visible:border-red-500 w-20"
+              className="border border-gray-200 py-2 pl-3 rounded-lg text-sm focus-visible:outline-none focus-visible:border-slate-400 w-20 transition-colors"
             />
           </div>
-          {error && <p className="text-red-400 font-bold text-base">{error}</p>}
+          {error && <p className="text-red-500 text-xs">{error}</p>}
         </ModalConfirmacion>
       )}
-    </>
+    </div>
   );
 };

@@ -1,6 +1,7 @@
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/material_green.css";
 import { Spanish } from "flatpickr/dist/l10n/es.js";
+import { Calendar } from "lucide-react";
 
 type InputFechaProps = {
   label: string;
@@ -35,15 +36,15 @@ export const InputFecha = ({
   const dateFormat = "d/m/Y";
 
   return (
-    <div className="flex flex-col mb-5">
-      <p>
+    <div className="flex flex-col mb-4">
+      <p className="text-xs font-medium text-slate-500 mb-1">
         {label}
-        {obligatorio && <span>*</span>}
+        {obligatorio && <span className="text-red-400">*</span>}
       </p>
-      <div className="flex items-center gap-2 border border-gray-300 rounded-lg px-4 bg-white w-[200px]">
+      <div className="flex items-center gap-2 border border-gray-200 rounded-lg px-3 bg-white w-[180px]">
         <Flatpickr
           disabled={disabled}
-          placeholder="Ingresar"
+          placeholder="Select..."
           value={value}
           onChange={onChange}
           options={{
@@ -52,12 +53,7 @@ export const InputFecha = ({
             disableMobile: true,
           }}
         />
-        <img
-          src="/icons/calendar.svg"
-          alt="calendario"
-          height={30}
-          width={30}
-        />
+        <Calendar size={16} className="text-slate-400" strokeWidth={1.75} />
       </div>
     </div>
   );

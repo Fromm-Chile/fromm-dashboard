@@ -55,9 +55,13 @@ export const AdminUsers = () => {
       cell: ({ getValue }: { getValue: () => any }) => (
         <div className="text-center">
           {getValue() ? (
-            <span className="text-green-500">Activo</span>
+            <span className="inline-block px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700">
+              Activo
+            </span>
           ) : (
-            <span className="text-red-500">Inactivo</span>
+            <span className="inline-block px-2.5 py-1 rounded-full text-xs font-medium bg-red-50 text-red-700">
+              Inactivo
+            </span>
           )}
         </div>
       ),
@@ -65,29 +69,27 @@ export const AdminUsers = () => {
   ];
 
   return (
-    <>
-      <div className="pb-10 pt-10">
-        <div className="w-full h-auto bg-white rounded-3xl shadow-lg p-8 mb-12 text-gray-600">
-          <div className="mb-6 flex justify-between items-center">
-            <h1 className="text-2xl font-medium text-center">
-              Usuarios del Panel Admistrativo
-            </h1>
-            <button
-              className="cursor-pointer hover:bg-red-400 bg-red-500 rounded-lg text-white p-4 hover:shadow-lg transition-all"
-              onClick={() => navigate("/nuevo-usuario")}
-            >
-              CREAR USUARIO
-            </button>
-          </div>
-
-          <Table
-            datosTabla={adminUsers}
-            columns={columns}
-            detailsRoute="usuarios"
-            isLoading={isLoading}
-          />
+    <div className="pb-8 pt-6">
+      <div className="w-full bg-white border border-gray-200 rounded-xl p-6 mb-8">
+        <div className="mb-5 flex justify-between items-center">
+          <h1 className="text-lg font-semibold text-slate-800">
+            Usuarios del Panel Admistrativo
+          </h1>
+          <button
+            className="cursor-pointer bg-slate-900 hover:bg-slate-800 rounded-lg text-white text-sm font-medium px-4 py-2.5 transition-colors"
+            onClick={() => navigate("/nuevo-usuario")}
+          >
+            Crear Usuario
+          </button>
         </div>
+
+        <Table
+          datosTabla={adminUsers}
+          columns={columns}
+          detailsRoute="usuarios"
+          isLoading={isLoading}
+        />
       </div>
-    </>
+    </div>
   );
 };

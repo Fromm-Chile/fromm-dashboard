@@ -1,11 +1,11 @@
 import { NavLink } from "react-router";
+import type { LucideIcon } from "lucide-react";
 
 type MenuItemProps = {
   menuData: {
     id: number;
     name: string;
-    icon: string;
-    iconWhite?: string;
+    icon: LucideIcon;
     link: string;
   }[];
   isOpen: boolean;
@@ -13,7 +13,7 @@ type MenuItemProps = {
 
 export const MenuItem = ({ menuData, isOpen }: MenuItemProps) => {
   return (
-    <div>
+    <div className="flex flex-col gap-1">
       {menuData.map((item) => (
         <NavLink
           to={item.link}
@@ -22,22 +22,20 @@ export const MenuItem = ({ menuData, isOpen }: MenuItemProps) => {
           key={item.id}
         >
           {({ isActive }) => (
-            <div className="flex gap-5 items-center mb-2 group-[.active]:background-red-100 group-[.active]:border-2 group-[.active]:border-red-500 group-[.active]:bg-red-500 group-[.active]:text-white p-2 rounded-lg transition-all duration-300 text-gray-600">
-              {isOpen ? (
-                <div className="flex gap-3 pl-3 w-full items-center">
-                  <img
-                    src={isActive ? item.iconWhite : item.icon}
-                    height={30}
-                    width={30}
-                  />
-                  <p className="font-medium">{item.name}</p>
-                </div>
-              ) : (
-                <img
-                  src={isActive ? item.iconWhite : item.icon}
-                  height={30}
-                  width={30}
-                />
+            <div
+              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors duration-150 text-sm ${
+                isActive
+                  ? "bg-slate-900 text-white"
+                  : "text-slate-600 hover:bg-gray-100"
+              }`}
+            >
+              <item.icon
+                size={18}
+                strokeWidth={1.75}
+                className="shrink-0"
+              />
+              {isOpen && (
+                <span className="font-medium truncate">{item.name}</span>
               )}
             </div>
           )}

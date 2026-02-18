@@ -75,76 +75,60 @@ export const LogIn = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <div className="flex items-center justify-center h-screen bg-gradient-to-r from-[#F5F5F5] to-[#EAEAEA]">
-          <div className="rounded-xl bg-white w-[400px] h-[500px]">
-            <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-              <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                <img
-                  alt="Your Company"
-                  src="/FrommLogo.webp"
-                  className="mx-auto h-10 w-auto"
-                />
-                <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
-                  Log in to the admin system
-                </h2>
-              </div>
+        <div className="flex items-center justify-center h-screen bg-white">
+          <div className="w-[380px]">
+            <div className="flex flex-col items-center px-6 py-10">
+              <img
+                alt="Fromm"
+                src="/FrommLogo.webp"
+                className="h-8 w-auto mb-10"
+              />
+              <h2 className="text-xl font-semibold text-slate-800 mb-8">
+                Log in to the admin system
+              </h2>
 
-              <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                <form action="#" method="POST" className="space-y-6">
-                  <div>
-                    <label
-                      htmlFor="email"
-                      className="block text-sm/6 font-medium text-gray-900"
-                    >
-                      Email
+              <form action="#" method="POST" className="w-full space-y-5">
+                <div>
+                  <label className="block text-xs font-medium text-slate-500 mb-1.5">
+                    Email
+                  </label>
+                  <InputController
+                    name="email"
+                    control={control}
+                    type="email"
+                    error={errors.email?.message || ""}
+                  />
+                </div>
+
+                <div>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label className="block text-xs font-medium text-slate-500">
+                      Password
                     </label>
-                    <InputController
-                      name="email"
-                      control={control}
-                      type="email"
-                      error={errors.email?.message || ""}
-                    />
-                  </div>
-
-                  <div>
-                    <div className="flex items-center justify-between">
-                      <label
-                        htmlFor="password"
-                        className="block text-sm/6 font-medium text-gray-900"
-                      >
-                        Password
-                      </label>
-                      <div className="text-sm">
-                        <a
-                          href="#"
-                          className="font-semibold text-red-600 hover:text-red-500"
-                          onClick={() => setPasswordModal(true)}
-                        >
-                          Forgot your password?
-                        </a>
-                      </div>
-                    </div>
-                    <div className="mt-2">
-                      <InputController
-                        name="password"
-                        control={control}
-                        type="password"
-                        error={errors.password?.message || ""}
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <button
-                      type="submit"
-                      className="flex w-full justify-center rounded-md bg-red-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-red-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 cursor-pointer"
-                      onClick={handleSubmit(handleSignIn)}
+                    <a
+                      href="#"
+                      className="text-xs font-medium text-slate-500 hover:text-slate-700 transition-colors"
+                      onClick={() => setPasswordModal(true)}
                     >
-                      Log In
-                    </button>
+                      Forgot your password?
+                    </a>
                   </div>
-                </form>
-              </div>
+                  <InputController
+                    name="password"
+                    control={control}
+                    type="password"
+                    error={errors.password?.message || ""}
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="flex w-full justify-center rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-medium text-white hover:bg-slate-800 transition-colors cursor-pointer"
+                  onClick={handleSubmit(handleSignIn)}
+                >
+                  Log In
+                </button>
+              </form>
             </div>
           </div>
         </div>

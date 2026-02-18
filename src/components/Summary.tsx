@@ -16,27 +16,24 @@ export const Summary = ({
   tituloEnviada = "Sent Quotes",
 }: SummaryProps) => {
   return (
-    <div className="h-[151px] w-full bg-white rounded-3xl shadow-md flex items-center justify-around p-4 mb-5">
-      <div className="flex gap-5 items-center border-r-2 border-gray-200 pr-5">
-        <img src="/images/inbox.svg" height={70} width={70} />
-        <div>
-          <p className="text-gray-500">{tituloTotal}</p>
-          <p className="text-2xl font-bold">{total}</p>
-        </div>
+    <div className="w-full grid grid-cols-3 gap-4 mb-6">
+      <div className="bg-white border border-gray-200 rounded-xl p-5">
+        <p className="text-xs font-medium text-slate-400 uppercase tracking-wide mb-1">
+          {tituloTotal}
+        </p>
+        <p className="text-2xl font-semibold text-slate-800">{total}</p>
       </div>
-      <div className="flex gap-5 items-center border-r-2 border-gray-200 pr-5">
-        <img src="/images/waiting.svg" height={70} width={70} />
-        <div>
-          <p className="text-gray-500">{tituloPendiente}</p>
-          <p className="text-2xl font-bold">{pendiente}</p>
-        </div>
+      <div className="bg-white border border-gray-200 rounded-xl p-5">
+        <p className="text-xs font-medium text-slate-400 uppercase tracking-wide mb-1">
+          {tituloPendiente}
+        </p>
+        <p className="text-2xl font-semibold text-slate-800">{pendiente}</p>
       </div>
-      <div className="flex gap-5 items-center">
-        <img src="/images/sent.svg" height={70} width={70} />
-        <div>
-          <p className="text-gray-500">{tituloEnviada}</p>
-          <p className="text-2xl font-bold">{enviada}</p>
-        </div>
+      <div className="bg-white border border-gray-200 rounded-xl p-5">
+        <p className="text-xs font-medium text-slate-400 uppercase tracking-wide mb-1">
+          {tituloEnviada}
+        </p>
+        <p className="text-2xl font-semibold text-slate-800">{enviada}</p>
       </div>
     </div>
   );

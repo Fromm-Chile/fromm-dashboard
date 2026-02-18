@@ -11,7 +11,6 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router";
-import { Button } from "../components/Button";
 import { ModalConfirmacion } from "../components/ModalConfirmacion";
 
 type UserSearch = {
@@ -101,14 +100,14 @@ export const NuevaCotizacion = () => {
   }));
 
   const handleInputChange = (value: string) => {
-    setInput(value); // Update the search input
+    setInput(value);
   };
 
   const handleChange = (selectedOption: any) => {
     if (selectedOption) {
-      setSelectedUser(selectedOption.user); // Update the selected user
+      setSelectedUser(selectedOption.user);
     } else {
-      setSelectedUser(null); // Clear the selection
+      setSelectedUser(null);
     }
   };
 
@@ -139,11 +138,11 @@ export const NuevaCotizacion = () => {
   return (
     <>
       {isLoading && <Loader />}
-      <div className="m-auto max-w-[1150px] min-h-[600px] bg-white shadow-lg rounded-lg py-6 px-36 my-10">
-        <h1 className="text-center text-2xl my-10 uppercase font-medium text-gray-700">
+      <div className="m-auto max-w-[700px] bg-white border border-gray-200 rounded-xl py-8 px-10 my-8">
+        <h1 className="text-center text-lg font-semibold text-slate-800 mb-6">
           Create a new quote
         </h1>
-        <p className="mb-10">
+        <p className="text-sm text-slate-500 mb-8">
           To generate a new quote, you must search for the user in the database
           using their <strong>email address</strong>.
         </p>
@@ -164,9 +163,9 @@ export const NuevaCotizacion = () => {
                   phone: "",
                   company: "",
                   message: "",
-                }); // Reset the form
-                setSelectedUser(null); // Clear the selected user
-                setInput(""); // Clear the search input
+                });
+                setSelectedUser(null);
+                setInput("");
               }}
               style={{
                 cursor: "pointer",
@@ -180,14 +179,13 @@ export const NuevaCotizacion = () => {
           )}
           loadingMessage={() => "Loading..."}
         />
-        <div className="md:grid md:grid-cols-1 md:gap-0 my-10 mb-14">
-          <div className="flex w-full gap-5 mb-5">
+        <div className="mt-8 mb-6">
+          <div className="grid grid-cols-2 gap-4 mb-2">
             <InputController
               control={control}
               name="name"
               placeholder="Name*"
               error={errors.name?.message}
-              className="w-[50%]"
               disabled={selectedUser ? true : false}
             />
             <InputController
@@ -195,16 +193,14 @@ export const NuevaCotizacion = () => {
               name="email"
               placeholder="Email*"
               error={errors.email?.message}
-              className="w-[50%]"
               disabled={selectedUser ? true : false}
             />
           </div>
-          <div className="flex w-full gap-5 mb-5 flex-1/2">
+          <div className="grid grid-cols-2 gap-4 mb-2">
             <InputController
               control={control}
               name="phone"
               placeholder="Phone"
-              className="w-[50%]"
               disabled={selectedUser ? true : false}
             />
             <InputController
@@ -212,7 +208,6 @@ export const NuevaCotizacion = () => {
               name="company"
               placeholder="Company*"
               error={errors.name?.message}
-              className="w-[50%]"
               disabled={selectedUser ? true : false}
             />
           </div>
@@ -222,25 +217,22 @@ export const NuevaCotizacion = () => {
             placeholder="Quote details*"
             error={errors.message?.message}
           />
-          <div className="flex justify-center">
-            <Button
-              className="border border-black rounded-lg p-2 text-textGray font-bold uppercase cursor-pointer"
+          <div className="flex justify-center mt-4">
+            <button
+              className="bg-slate-900 text-white rounded-lg px-6 py-2.5 text-sm font-medium hover:bg-slate-800 cursor-pointer transition-colors"
               onClick={handleSubmit(() => setModal(true))}
-              link=""
             >
-              CREATE QUOTE
-            </Button>
+              Create Quote
+            </button>
           </div>
         </div>
-        <div className="mt-10 flex items-center gap-2 text-lg">
-          <img src="/icons/left-arrow.svg" width={15} height={15} />
-          <button
-            className="cursor-pointer hover:text-red-600"
-            onClick={() => navigate("/cotizaciones")}
-          >
-            Go back
-          </button>
-        </div>
+        <button
+          className="flex items-center gap-2 text-sm text-slate-500 hover:text-slate-700 cursor-pointer transition-colors"
+          onClick={() => navigate("/cotizaciones")}
+        >
+          <img src="/icons/left-arrow.svg" width={14} height={14} />
+          Go back
+        </button>
       </div>
       <ModalConfirmacion
         text="Are you sure you want to create a new quote?"
