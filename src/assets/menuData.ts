@@ -6,7 +6,6 @@ import {
   Users,
   BarChart3,
   UserCog,
-  Image,
   type LucideIcon,
 } from "lucide-react";
 
